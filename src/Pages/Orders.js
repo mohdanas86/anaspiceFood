@@ -92,7 +92,7 @@ const Orders = () => {
 
   const handleOrder = async () => {
     try {
-      const url = `http://localhost:3001/api/order/${user._id}`;
+      const url = `${process.env.REACT_APP_BACKEND_URL}/api/order/${user._id}`;
       const response = await axios.get(url);
       setOrders(response.data.data);
       console.log(response.data.data)

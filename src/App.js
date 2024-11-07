@@ -1,13 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
+
 import Header from './components/Header';
 import Home from './components/Home';
-import Dishes from './Pages/Dishes';
 import Orders from './Pages/Orders';
 import { MyProvider } from './context/useContext';
 import { CartProvider } from './context/CartContext';
 import Cart from './Pages/Cart';
-import Hero from './components/Hero';
 import Footer from './components/Footer';
 import SignIn from './Pages/SignIn';
 import SignUp from './Pages/SignUp';

@@ -10,7 +10,7 @@ const RateDish = ({ id }) => {
     e.preventDefault();
 
     try {
-      const url = `http://localhost:3001/api/dishes/${id}/rate`;
+      const url = `${process.env.REACT_APP_BACKEND_URL}/api/dishes/${id}/rate`;
       const response = await axios.post(url, { rating, review, username });
       console.log(response);
       setRating(0);      // Reset rating

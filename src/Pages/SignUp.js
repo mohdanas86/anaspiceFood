@@ -24,7 +24,7 @@ const SignUp = () => {
         e.preventDefault();
 
         try {
-            const url = "http://localhost:3001/api/register";
+            const url = `${process.env.REACT_APP_BACKEND_URL}/api/register`;
             const response = await axios.post(url, formData);
             console.log(response.data);
             const auth_token = await response.data.token;

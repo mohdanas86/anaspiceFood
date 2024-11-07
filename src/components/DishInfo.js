@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { AiOutlineStar } from "react-icons/ai";
 import { FaCartPlus, FaStar } from "react-icons/fa";
 import { useCart } from "../context/CartContext";
 import RecomendedationContainer from "./RecomendedationContainer";
-import RateDish from "./RateDish";
+import { useParams } from "react-router-dom";
 
 const DishInfo = () => {
   const { id } = useParams();
@@ -17,9 +15,7 @@ const DishInfo = () => {
   useEffect(() => {
     const fetchDish = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3001/api/dishes/${id}`
-        );
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/dishes/${id}`);
         setDish(response.data.data);
       } catch (error) {
         setError("Error fetching dish");
@@ -139,8 +135,8 @@ const DishInfo = () => {
                               <FaStar
                                 key={star}
                                 className={`w-6 h-6 ${review.rating >= star
-                                    ? "text-yellow-500"
-                                    : "text-gray-300"
+                                  ? "text-yellow-500"
+                                  : "text-gray-300"
                                   }`}
                               />
                             ))}

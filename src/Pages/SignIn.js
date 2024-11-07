@@ -23,7 +23,7 @@ const SignIn = () => {
     e.preventDefault();
 
     try {
-      const url = "http://localhost:3001/api/login";
+      const url = `${process.env.REACT_APP_BACKEND_URL}/api/login`;
       const response = await axios.post(url, formData);
       console.log(response.data.token);
       const auth_token = await response.data.token;

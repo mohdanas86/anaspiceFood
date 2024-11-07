@@ -1,9 +1,7 @@
 import mongoose from "mongoose";
 
-const url = 'mongodb+srv://anas:anas@food.t6wubmw.mongodb.net/foodApp?retryWrites=true&w=majority&appName=food'
-
 const dataBaseConnection = () => {
-    mongoose.connect(url)
+    mongoose.connect(process.env.DATA_BASE)
         .then((db) => {
             console.log("db connected");
         })

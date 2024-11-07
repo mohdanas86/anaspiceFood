@@ -2,8 +2,9 @@ import express from "express"
 import http from "http"
 import bodyParser from "body-parser"
 import cors from "cors"
+import dotenv from 'dotenv';
+dotenv.config();  // Loads environment variables from .env file
 
-// require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);

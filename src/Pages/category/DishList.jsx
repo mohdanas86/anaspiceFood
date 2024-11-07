@@ -24,8 +24,8 @@ const DishList = () => {
     setLoading(true);
     try {
       const url = category
-        ? `http://localhost:3001/api/category?category=${category}`
-        : "http://localhost:3001/api/category"; // If no category, fetch all
+        ? `${process.env.REACT_APP_BACKEND_URL}/api/category?category=${category}`
+        : `${process.env.REACT_APP_BACKEND_URL}/api/category`; // If no category, fetch all
       const response = await axios.get(url);
 
       // Check if dishes are returned

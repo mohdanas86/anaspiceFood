@@ -19,7 +19,7 @@ export const MyProvider = ({ children }) => {
         if (!token) return;
 
         try {
-            const local_url = "http://localhost:3001/api/user";
+            const local_url = `${process.env.REACT_APP_BACKEND_URL}/api/user`;
             const response = await fetch(local_url, {
                 method: "GET",
                 headers: {

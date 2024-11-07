@@ -13,7 +13,7 @@ const Dishes = () => {
   // Fetch dishes from API and save them to state and local storage
   const fetchDishes = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/api/dishes");
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/dishes`);
       const fetchedDishes = response.data.data;
       setDishes(fetchedDishes);
       localStorage.setItem("dish", JSON.stringify(fetchedDishes)); // Store fetched data in localStorage

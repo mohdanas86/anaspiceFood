@@ -11,6 +11,7 @@
 # production
 /build
 
+.env
 # backend environment files
 /backend/.env
 

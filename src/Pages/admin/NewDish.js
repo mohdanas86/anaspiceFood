@@ -76,7 +76,7 @@ const NewDish = () => {
     e.preventDefault();
 
     try {
-      const url = `http://localhost:3001/api/newdish`;
+      const url = `${process.env.REACT_APP_BACKEND_URL}/api/newdish`;
       const response = await axios.post(url, form);
       alert(`New dish added: ${response.data.name}`);
       setForm({

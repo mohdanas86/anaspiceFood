@@ -58,8 +58,6 @@ const Checkout = () => {
     { state: "Puducherry", code: "PY" }
   ];
 
-
-
   const handleAccountChange = (e) => {
     setAccountInfo({ ...accountInfo, [e.target.name]: e.target.value });
   };
@@ -109,7 +107,7 @@ const Checkout = () => {
       };
 
 
-      const response = await fetch("http://localhost:3001/api/order", {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/order`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
