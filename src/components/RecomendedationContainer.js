@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { CiShoppingCart } from "react-icons/ci";
 import { MdKeyboardArrowDown, MdOutlineShoppingBag } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Ensure axios is imported
