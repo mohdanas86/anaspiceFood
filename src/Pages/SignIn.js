@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useMyContext } from "../context/useContext";
 
 const SignIn = () => {
   const { setServerToken } = useMyContext();
+  const Navigate = useNavigate();
 
   const [showpass, setshowPass] = useState(false);
   const [formData, setFormDate] = useState({
@@ -32,6 +33,7 @@ const SignIn = () => {
         username: "",
         password: "",
       })
+      Navigate("/")
     } catch (err) {
       console.log(err);
     }
@@ -96,14 +98,14 @@ const SignIn = () => {
           </label>
         </div>
 
-        <button className="btn btn-primary bg-blue-500 rounded-full py-4 text-white border-0 mt-6">
+        <button className="btn bg-[--primary-color] hover:bg-[--secondary-color] rounded-full py-4 text-white border-0 mt-6">
           Sign In
         </button>
 
         <div className="grid text-start">
           <p className="text-slate-600 mb-4 capitalize">
             don't have an existing account{" "}
-            <Link className="text-blue-600" to={"/signup"}>
+            <Link className="text-[--primary-color]" to={"/signup"}>
               sign up
             </Link>{" "}
             here

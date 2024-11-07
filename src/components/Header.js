@@ -10,7 +10,7 @@ const Header = () => {
 
   return (
     <header className="shadow-md font-sans tracking-wide relative z-50">
-      <section className="py-2 bg-[#007bff] text-white text-right px-10">
+      <section className="py-2 bg-[--primary-color] text-white text-right px-10">
         <p className="text-sm capitalize">Get 40% & Free Shipping on your first order!</p>
       </section>
 
@@ -45,37 +45,56 @@ const Header = () => {
             <li className="max-lg:border-b max-lg:py-3 px-3">
               <Link
                 to="/"
-                className="hover:text-[#007bff] text-[#007bff] block font-bold text-[15px]"
+                className="hover:text-[--primary-color] text-[--primary-color] block font-bold text-[15px]"
               >
                 Home
               </Link>
             </li>
 
-            <li className="max-lg:border-b max-lg:py-3 px-3">
+            {/* <li className="max-lg:border-b max-lg:py-3 px-3">
               <Link
                 to="/Checkout"
-                className="hover:text-[#007bff] text-[#333] block font-bold text-[15px]"
+                className="hover:text-[--primary-color] text-[#333] block font-bold text-[15px]"
               >
                 Checkout
               </Link>
-            </li>
+            </li> */}
+
+            {isLoggedIn ? (<li className="max-lg:border-b max-lg:py-3 px-3">
+              <Link
+                to="/orders"
+                className="hover:text-[--primary-color] text-[#333] block font-bold text-[15px]"
+              >
+                Orders
+              </Link>
+            </li>) : ("")}
+
+            {isLoggedIn ? (<li className="max-lg:border-b max-lg:py-3 px-3">
+              <Link
+                to="/newdish"
+                className="hover:text-[--primary-color] text-[#333] block font-bold text-[15px]"
+              >
+                New Dish
+              </Link>
+            </li>) : ("")}
+
 
             <li className="max-lg:border-b max-lg:py-3 px-3">
               <Link
-                to="/orders"
-                className="hover:text-[#007bff] text-[#333] block font-bold text-[15px]"
+                to="/catogery"
+                className="hover:text-[--primary-color] text-[#333] block font-bold text-[15px]"
               >
-                Orders
+                Catogery
               </Link>
             </li>
 
             <li className="max-lg:border-b max-lg:py-3 px-3">
               {isLoggedIn ? (
-                <button onClick={logoutUser} className="hover:text-[#007bff] text-[#333] block font-bold text-[15px]">
+                <button onClick={logoutUser} className="hover:text-[--primary-color] text-[#333] block font-bold text-[15px]">
                   Logout
                 </button>
               ) : (
-                <Link to="/signin" className="hover:text-[#007bff] text-[#333] block font-bold text-[15px]">
+                <Link to="/signin" className="hover:text-[--primary-color] text-[#333] block font-bold text-[15px]">
                   Sign In
                 </Link>
               )}
@@ -86,7 +105,7 @@ const Header = () => {
         <Link to="/cart">
           <div className="indicator relative">
             {cartItems.length > 0 && (
-              <span className="indicator-item badge bg-blue-400 text-white absolute top-1 right-[-8px] rounded-full px-2 py-1 text-xs font-semibold">
+              <span className="indicator-item badge bg-[--primary-color] text-white absolute top-1 right-[-8px] rounded-full px-2 py-1 text-xs font-semibold">
                 {cartItems.length}
               </span>
             )}

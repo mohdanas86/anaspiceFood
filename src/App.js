@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import Home from './components/Home';
-import Checkout from './Pages/Checkout';
 import Dishes from './Pages/Dishes';
 import Orders from './Pages/Orders';
 import { MyProvider } from './context/useContext';
@@ -12,6 +11,10 @@ import Hero from './components/Hero';
 import Footer from './components/Footer';
 import SignIn from './Pages/SignIn';
 import SignUp from './Pages/SignUp';
+import NewDish from './Pages/admin/NewDish';
+import DishInfo from './components/DishInfo';
+import Checkout from './Pages/checkout/Checkout';
+import DishList from './Pages/category/DishList';
 
 function App() {
   return (
@@ -26,6 +29,9 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/newdish" element={<NewDish />} />
+            <Route path="/dishes/:id" element={<DishInfo />} />
+            <Route path="/catogery" element={<DishList />} />
           </Routes>
           <Footer />
         </CartProvider>

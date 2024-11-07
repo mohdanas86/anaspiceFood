@@ -46,8 +46,9 @@ export const MyProvider = ({ children }) => {
 
     const logoutUser = () => {
         setToken("");
-        localStorage.removeItem("token");
         localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        localStorage.removeItem("cartItems");
         setLogin(false);
         setUser('');
     }
