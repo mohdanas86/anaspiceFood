@@ -25,7 +25,7 @@ userSchema.methods.generateToken = async function () {
             id: this._id.toString(),
             email: this.email
         },
-        "ANASFOODMANAGEMENTSYSTEM", // Secret key, ideally stored in environment variable
+        process.env.JWT_KEY, // Secret key, ideally stored in environment variable
         { expiresIn: "2d" }
     );
 };

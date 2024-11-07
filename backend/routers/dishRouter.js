@@ -127,7 +127,7 @@ dishRouter.get("/category", async (req, res) => {
     try {
         // If category is provided, filter dishes by category
         const query = category && category !== "All" ? { category } : {};
- // Use the category in the query object
+        // Use the category in the query object
 
         const dishes = await dishModel.find(query);  // Fetch the dishes using the query
 
