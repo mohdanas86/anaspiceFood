@@ -8,7 +8,6 @@ import {
 } from "react-icons/ai";
 import { BiDish } from "react-icons/bi";
 import { GiCookingPot } from "react-icons/gi";
-import { MdAllergy } from "react-icons/md";
 import { FaInfoCircle } from "react-icons/fa";
 import { FaLeaf } from "react-icons/fa";
 

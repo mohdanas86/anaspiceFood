@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMyContext } from "../context/useContext";
 
 const SignUp = () => {
-    const { setServerToken, login, setLogin } = useMyContext();
+    const { setServerToken } = useMyContext();
     const Navigate = useNavigate();
 
     const [showpass, setshowPass] = useState(false);

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useMyContext } from "../context/useContext";
 
 // Component to render individual order details
 const OrderCard = ({ order }) => {
@@ -105,7 +104,8 @@ const Orders = () => {
 
   useEffect(() => {
     handleOrder();
-  }, []);
+  }, [handleOrder]);
+  
 
   if (loading) {
     return <div>Loading...</div>;

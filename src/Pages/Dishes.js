@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import { CiShoppingCart } from "react-icons/ci";
 import { MdOutlineShoppingBag } from "react-icons/md";
 
 const Dishes = () => {
@@ -43,7 +42,7 @@ const Dishes = () => {
 
   return (
     <div className="w-full flex justify-center items-center px-10 py-2 relative overflow-hidden">
-      {dishes && !dishes.length == "" ? (
+      {dishes && !dishes.length === "" ? (
         <div className="carousel carousel-center w-full flex overflow-x-auto snap-x snap-mandatory gap-6 py-6">
           {dishes.map((dish) => (
             <div
