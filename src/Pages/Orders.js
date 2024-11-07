@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 
 // Component to render individual order details
@@ -89,22 +89,22 @@ const Orders = () => {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const handleOrder = async () => {
+  const handleOrder = useCallback(async () => {
     try {
       const url = `${process.env.REACT_APP_BACKEND_URL}/api/order/${user._id}`;
       const response = await axios.get(url);
       setOrders(response.data.data);
-      console.log(response.data.data)
+      console.log(response.data.data);
       setLoading(false);
     } catch (err) {
       setError("Error fetching orders. Please try again.");
       setLoading(false);
     }
-  };
+  }, [user._id]);  // Only recreate handleOrder if user._id changes
 
   useEffect(() => {
     handleOrder();
-  }, [handleOrder]);
+  }, [handleOrder]);  // Effect depends on handleOrder
   
 
   if (loading) {
