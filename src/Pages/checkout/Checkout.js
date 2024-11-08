@@ -3,6 +3,7 @@ import { useCart } from "../../context/CartContext"; // Import the CartContext
 import { AiOutlineDelete } from "react-icons/ai";
 
 import { FaUser, FaCity, FaAddressCard, FaLock, FaCcVisa, FaCcPaypal } from "react-icons/fa";
+import PageNav from "../../components/PageNav";
 
 const Checkout = () => {
   const userMail = JSON.parse(localStorage.getItem("user"));
@@ -144,12 +145,16 @@ const Checkout = () => {
         <>
 
           <div className="container mx-auto">
-            <div className="grid grid-cols-2 gap-6">
+            <div className="flex lg:py-6 lg:px-14 pt-4 px-4">
+              <PageNav title={"Checkout"} />
+            </div>
+
+            <div className="grid lg:grid-cols-2 grid-cols-1 gap-6">
               {/* Checkout Form */}
 
               {/* Checkout Form */}
               <div className="p-8 w-full max-w-lg mx-auto py-12">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-left">Checkout</h2>
+                {/* <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-left">Checkout</h2> */}
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Account Section */}
                   <div className="space-y-2">
@@ -321,13 +326,14 @@ const Checkout = () => {
                   {error && <p className="text-red-600 mt-2">{error}</p>}
                   {successMessage && <p className="text-green-600 mt-2">{successMessage}</p>}
                 </form>
-
               </div>
 
 
               {/* Dish Items Table with Order Summary and Checkout Button */}
               <div className="relative w-full overflow-x-auto bg-gray-50">
-                <div className="overflow-x-auto p-4 w-[80%] mx-auto mt-8">
+                <div className="overflow-x-auto p-4 lg:w-[80%] w-full mx-auto mt-8">
+
+                <div className="overflow-x-auto">
                   <table className="min-w-full bg-white text-gray-800">
                     <thead>
                       <tr className="bg-gradient-to-r from-gray-100 to-gray-200 text-left">
@@ -373,6 +379,7 @@ const Checkout = () => {
                       ))}
                     </tbody>
                   </table>
+                  </div>
 
                   {/* Order Summary and Place Order Button */}
                   <div className="p-4 mt-6 border-t text-gray-800 font-semibold flex flex-col space-y-4">
@@ -410,6 +417,7 @@ const Checkout = () => {
                   {successMessage && <p className="text-green-600 mt-2">{successMessage}</p>}
                 </div>
               </div>
+              
             </div>
           </div>
 

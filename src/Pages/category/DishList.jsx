@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CategoryFilter from "./CategoryFilter"; // Import the CategoryFilter component
-import { MdKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useMyContext } from "../../context/useContext";
+import ShowMoreBtn from "../../components/ShowMoreBtn";
+import PageNav from "../../components/PageNav";
 
 const DishList = () => {
-    const navigate = useNavigate();
-  const [dishes, setDishes] = useState([]);
+  const navigate = useNavigate();
+  const [dishes, setDishes] = useState(JSON.parse(localStorage.getItem("Category")));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visibleCount, setVisibleCount] = useState(6); // Controls the number of visible dishes
-
-  const handleShowMore = () => {
-    setVisibleCount((prevCount) => prevCount + 6); // Increase the visible count by 4
-  };
+  const {visibleCount} = useMyContext();
 
   const handleClick = (id) => {
     navigate(`/dishes/${id}`); // Assuming your DishInfo route is set up to handle this
@@ -33,6 +31,7 @@ const DishList = () => {
         setError("No dishes found for this category.");
       } else {
         setDishes(response.data);
+       localStorage.setItem("Category", JSON.stringify(response.data))
       }
       setError(null); // Reset error state
     } catch (err) {
@@ -49,14 +48,14 @@ const DishList = () => {
 
   return (
     <div className="container mx-auto bg-white">
-      <div className="flex space-x-6 w-full">
+      <div className="flex flex-col lg:flex-row lg:space-x-6 w-full">
         {/* Category Filter Component */}
-        <div className="flex w-[20%] py-9 pl-10 bg-base-200">
+        <div className="flex lg:w-[20%] pt-8 lg:pl-10 px-4 lg:bg-base-200">
         <CategoryFilter onFilter={fetchDishes} />
         </div>
 
         {/* Display Dishes or Loading/Error */}
-        <div className="flex-1 w-[80%] py-8">
+        <div className="lg:flex-1 lg:w-[80%] w-full pb-8">
           {loading && <p className="text-center text-gray-500">Loading...</p>}
           {error && (
             <p className="text-center text-red-500 capitalize">
@@ -64,17 +63,17 @@ const DishList = () => {
             </p>
           )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 px-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 lg:gap-6 gap-4 lg:px-6 px-4">
             {dishes.slice(0, visibleCount).map((dish, index) => (
               <div
                 key={index}
                 onClick={() => handleClick(dish._id)} // Trigger the click handler to navigate
-                className="bg-white p-4 rounded-lg shadow-lg hover:scale-105 transition-all"
+                className="bg-white p-4 rounded-lg shadow-lg hover:scale-105 transition-all flex flex-col justify-between"
               >
                 <img
                   src={dish.image}
                   alt={dish.name}
-                  className="w-full h-40 object-cover rounded-md"
+                  className="w-full lg:h-40 h-32 object-cover rounded-md"
                 />
                 <h3 className="text-lg font-semibold text-gray-800 mt-4">
                   {dish.name}
@@ -114,15 +113,7 @@ const DishList = () => {
 
           {/* Show More Button */}
           {visibleCount < dishes.length && (
-            <div className="flex w-full justify-center mt-12">
-              <button
-                onClick={handleShowMore}
-                className="flex items-center gap-2 px-6 py-3 text-lg font-semibold text-gray-700 bg-white rounded-lg shadow-lg border border-gray-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-200"
-              >
-                <span>Show more</span>
-                <MdKeyboardArrowDown className="text-gray-500 text-2xl transition-transform transform group-hover:rotate-180" />
-              </button>
-            </div>
+           <ShowMoreBtn />
           )}
         </div>
       </div>

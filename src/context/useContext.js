@@ -3,17 +3,19 @@ import { createContext, useContext, useState, useEffect, useCallback } from "rea
 const MyContext = createContext();
 
 export const MyProvider = ({ children }) => {
-    const [user, setUser] = useState(localStorage.getItem('user'));
-    const [login, setLogin] = useState(false);
-    const [token, setToken] = useState(localStorage.getItem('token'));
+  const [menu, setMenu] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(6);
+  const [user, setUser] = useState(localStorage.getItem('user'));
+  const [login, setLogin] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem('token'));
 
 
-    const setServerToken = (serverToken) => {
-        setToken(serverToken);
-        localStorage.setItem("token", serverToken); // Corrected from setToken to setItem
-    }
+  const setServerToken = (serverToken) => {
+    setToken(serverToken);
+    localStorage.setItem("token", serverToken); // Corrected from setToken to setItem
+  }
 
-    const isLoggedIn = !!token;
+  const isLoggedIn = !!token;
 
   // Memoize the userAuthorization function
   const userAuthorization = useCallback(async () => {
@@ -30,7 +32,7 @@ export const MyProvider = ({ children }) => {
 
       if (response.ok) {
         const userData = await response.json();
-        console.log(userData.data);
+        // console.log(userData.data);
         setUser(userData.data);
         localStorage.setItem("user", JSON.stringify(userData.data));
         setLogin(true);
@@ -47,31 +49,35 @@ export const MyProvider = ({ children }) => {
   // useEffect to call the userAuthorization function when token changes
   useEffect(() => {
     userAuthorization();
-}, [userAuthorization]);  // Effect runs whenever userAuthorization changes
+  }, [userAuthorization]);  // Effect runs whenever userAuthorization changes
 
-    const logoutUser = () => {
-        setToken("");
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        localStorage.removeItem("cartItems");
-        setLogin(false);
-        setUser('');
-    }
+  const logoutUser = () => {
+    setToken("");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("cartItems");
+    setLogin(false);
+    setUser('');
+  }
 
-    // useEffect(() => {
-    //     userAuthorization();
-    // }, [token]);
+  const handleShowMore = () => {
+    setVisibleCount((visibleCount) => visibleCount + 3);
+  };
 
-    return (
-        <MyContext.Provider value={{
-            login, setLogin, token, setToken, user, setUser,
-            setServerToken,
-            isLoggedIn,
-            logoutUser
-        }}>
-            {children}
-        </MyContext.Provider>
-    );
+  return (
+    <MyContext.Provider value={{
+      login, setLogin, token, setToken, user, setUser,
+      setServerToken,
+      isLoggedIn,
+      logoutUser,
+      visibleCount,
+      setVisibleCount,
+      handleShowMore,
+      menu, setMenu
+    }}>
+      {children}
+    </MyContext.Provider>
+  );
 }
 
 export const useMyContext = () => useContext(MyContext);

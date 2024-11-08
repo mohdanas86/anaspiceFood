@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+import PageNav from "../components/PageNav";
 
 // Component to render individual order details
 const OrderCard = ({ order }) => {
@@ -117,10 +118,13 @@ const Orders = () => {
 
   return (
     <div className="w-full flex flex-col items-center py-6 min-h-[59.5vh]">
-      <h2 className="text-3xl font-semibold mb-6">Your Orders</h2>
+      {/* <h2 className="text-3xl font-semibold mb-6">Your Orders</h2> */}
+      <div className="flex lg:pl-14 pl-4 w-full pb-4">
+      <PageNav title={"Your Orders"}/>
+      </div>
 
       {orders.length > 0 ? (
-        <div className="w-full max-w-[80%] grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4">
+        <div className="w-full lg:w-[80%] grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4">
           {orders.map((order) => (
             <OrderCard key={order._id} order={order} />
           ))}

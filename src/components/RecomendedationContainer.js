@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { MdKeyboardArrowDown, MdOutlineShoppingBag } from "react-icons/md";
+import { MdOutlineShoppingBag } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Ensure axios is imported
 import { useCart } from "../context/CartContext"; // Assuming useCart is correctly set up
+import ShowMoreBtn from "./ShowMoreBtn";
+import { useMyContext } from "../context/useContext";
 
 const RecomendedationContainer = () => {
-  const [visibleCount, setVisibleCount] = useState(4);
+  const {visibleCount} = useMyContext();
   const [dishes, setDishes] = useState([]);
   const navigate = useNavigate();
   const { addToCart } = useCart();
@@ -41,17 +43,13 @@ const RecomendedationContainer = () => {
     });
   };
 
-  const handleShowMore = () => {
-    setVisibleCount((visibleCount) => visibleCount + 4);
-  };
-
   return (
-    <div className="recomendedationContainer w-[35%] py-12 pl-6 mt-3">
+    <div className="recomendedationContainer lg:w-[35%] w-full lg:py-12 py-8 lg:pl-6 mt-3">
       <h2 className="text-2xl font-semibold mb-3">Related Dishes</h2>
 
       <div className="w-full flex flex-col items-center py-2">
         {dishes && dishes.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+          <div className="grid grid-cols-2 gap-6 w-full">
             {dishes.slice(0, visibleCount).map((dish) => (
               <div
                 key={dish._id}
@@ -86,7 +84,7 @@ const RecomendedationContainer = () => {
                       }}
                       className="w-full btn bg-[--primary-color] hover:bg-[--secondary-color] text-white flex justify-center items-center gap-4 hover:translate-x-[-5px] duration-300"
                     >
-                      <span className="text-lg font-bold flex justify-center items-center">
+                      <span className="text-lg font-bold lg:flex hidden justify-center items-center">
                         <MdOutlineShoppingBag />
                       </span>
                       <span>Add to Cart</span>
@@ -103,15 +101,7 @@ const RecomendedationContainer = () => {
 
       {/* IF ITEM IS MORE THEN 4 THEN SHOW MORE ITEM BTN */}
       {visibleCount < dishes.length ? (
-        <div className="flex w-full justify-center">
-          <button
-            onClick={handleShowMore}
-            className="flex items-center gap-2 px-6 py-3 mt-6 text-lg font-semibold text-gray-700 bg-white rounded-lg shadow-lg shadow-slate-200 border border-gray-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-200"
-          >
-            <span>Show more</span>
-            <MdKeyboardArrowDown className="text-gray-500 text-2xl transition-transform transform group-hover:rotate-180" />
-          </button>
-        </div>
+        <ShowMoreBtn />
       ) : (
         ""
       )}

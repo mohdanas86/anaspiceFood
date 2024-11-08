@@ -43,7 +43,7 @@ const SignUp = () => {
 
     return (
         <div className="container min-h-[59.5vh] mx-auto p-6 justify-center items-center flex">
-            <form className="w-[30%] mx-auto grid gap-4 py-4" onSubmit={handleSubmit}>
+            <form className="lg:w-[30%] w-full mx-auto grid gap-4 py-4" onSubmit={handleSubmit}>
                 <div className="grid text-center">
                     <h2 className="text-2xl font-bold text-slate-800">Register</h2>
                     <p className="text-slate-600 mb-4">
@@ -129,7 +129,7 @@ const SignUp = () => {
                     <p className="text-slate-600 mb-4 capitalize">
                         don't have an existing account{" "}
                         <Link className="text-[--primary-color]" to={"/signin"}>
-                            sign up
+                            sign in
                         </Link>{" "}
                         here
                     </p>

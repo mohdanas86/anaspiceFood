@@ -10,6 +10,7 @@ import { BiDish } from "react-icons/bi";
 import { GiCookingPot } from "react-icons/gi";
 import { FaInfoCircle } from "react-icons/fa";
 import { FaLeaf } from "react-icons/fa";
+import PageNav from "../../components/PageNav";
 
 const NewDish = () => {
   const [form, setForm] = useState({
@@ -103,9 +104,12 @@ const NewDish = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Add new dish</h2>
+      {/* <h2 className="text-2xl font-bold mb-4">Add new dish</h2> */}
+      <div className="flex lg:pl-9 pl-0 pb-6 lg:pb-0">
+      <PageNav title={"New dish"}/>
+      </div>
 
-      <form onSubmit={handleSubmit} className="w-[60%] mx-auto p-8 space-y-6">
+      <form onSubmit={handleSubmit} className="lg:w-[60%] w-full mx-auto lg:py-8 lg:px-8 px-0 space-y-6">
         <div className="space-y-2">
           <label className="flex items-center text-sm font-medium text-gray-800">
             <BiDish className="mr-2 text-[--primary-color]" /> Dish Name

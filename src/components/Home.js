@@ -8,9 +8,9 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <Dishes />
+       <Dishes />
       <FeaturedItem /> 
-      <DishList />
+      <DishList /> 
     </>
   );
 }

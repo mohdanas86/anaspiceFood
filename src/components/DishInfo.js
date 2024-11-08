@@ -4,6 +4,7 @@ import { FaCartPlus, FaStar } from "react-icons/fa";
 import { useCart } from "../context/CartContext";
 import RecomendedationContainer from "./RecomendedationContainer";
 import { useParams } from "react-router-dom";
+import PageNav from "./PageNav";
 
 const DishInfo = () => {
   const { id } = useParams();
@@ -38,9 +39,11 @@ const DishInfo = () => {
   };
 
   return (
-    <div className="w-full flex justify-start items-start px-12 ">
+    <>
+    {/* <PageNav /> */}
+    <div className="w-full flex lg:flex-row flex-col justify-start items-start lg:px-12 px-4 ">
       {/* PRODUCT INFO */}
-      <div className="w-[65%] mx-auto py-6 pr-6 ">
+      <div className="lg:w-[65%] w-full mx-auto py-6 lg:pr-6 ">
         {loading ? (
           <p>Loading...</p>
         ) : error ? (
@@ -48,15 +51,15 @@ const DishInfo = () => {
             <p className="text-red-600 font-semibold">{error}</p>
           </div>
         ) : dish ? (
-          <div className="py-6 space-y-6">
+          <div className="py-0 lg:py-6 space-y-6">
+
+          <div className="flex justify-start items-start">
+          <span className="pt-2"><PageNav /></span>
             <h1 className="text-4xl font-bold text-gray-800 text-start">
-              {dish.name}
-            </h1>
-            <img
-              src={dish.image}
-              alt={dish.name}
-              className="w-full h-72 object-cover rounded-md shadow-lg"
-            />
+              {dish.name}</h1>
+          </div>
+
+            <img src={dish.image} alt={dish.name} className="w-full h-72 object-cover rounded-md shadow-lg" />
             <p className="text-gray-700 text-lg text-start">
               {dish.description}
             </p>
@@ -112,7 +115,7 @@ const DishInfo = () => {
             </button>
 
             {/* Rating */}
-            <div className="w-full flex flex-col items-start space-y-8 mt-12 px-6">
+            <div className="w-full flex flex-col items-start space-y-8 mt-12 lg:px-6 px-0">
               {/* Customer Reviews Section */}
               <div className="w-full mt-8">
                 <h2 className="text-4xl font-semibold mb-8 text-start">
@@ -175,7 +178,7 @@ const DishInfo = () => {
 
       {/* RIGHT SECTION */}
       <RecomendedationContainer />
-    </div>
+    </div></>
   );
 };
 
