@@ -4,7 +4,6 @@ import CategoryFilter from "./CategoryFilter"; // Import the CategoryFilter comp
 import { useNavigate } from "react-router-dom";
 import { useMyContext } from "../../context/useContext";
 import ShowMoreBtn from "../../components/ShowMoreBtn";
-import PageNav from "../../components/PageNav";
 
 const DishList = () => {
   const navigate = useNavigate();
