@@ -7,7 +7,7 @@ import ShowMoreBtn from "../../components/ShowMoreBtn";
 
 const DishList = () => {
   const navigate = useNavigate();
-  const [dishes, setDishes] = useState(JSON.parse(localStorage.getItem("Category")));
+  const [dishes, setDishes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const {visibleCount} = useMyContext();
