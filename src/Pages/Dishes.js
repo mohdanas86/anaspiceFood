@@ -47,7 +47,7 @@ const Dishes = () => {
           {dishes.map((dish) => (
             <div
               key={dish._id}
-              className="card bg-white lg:w-[465px] w-[150px] flex-shrink-0 shadow-lg cursor-pointer snap-center"
+              className="card bg-white lg:w-[465px] w-[150px] flex-shrink-0 lg:shadow-lg shadow-none cursor-pointer snap-center"
               onClick={() => handleClick(dish._id)} // Trigger the click handler to navigate
             >
               {dish.image && (
