@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { MdArrowBack } from "react-icons/md"; // Back icon from react-icons
 import { IoIosArrowBack } from "react-icons/io";
 
 const PageNav = ({ title }) => {
