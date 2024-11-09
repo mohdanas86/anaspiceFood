@@ -21,36 +21,52 @@ const FeaturedItem = () => {
   return (
     <div className="mx-auto lg:px-10 px-4">
       <h2 className="text-2xl font-bold mb-2">Featured Items</h2>
-      <div className="grid lg:grid-cols-2 gap-4 lg:py-8 py-4">
-        {dish.slice(3, 5).map((item, index) => (
-          <div key={index} className="card card-side bg-base-100 shadow-md lg:h-52 h-40">
-            <figure className="lg:w-1/2 w-[200px]">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="object-cover w-full h-full"
-              />
-            </figure>
-            <div className="lg:card-body lg:p-4 w-full flex flex-col justify-start p-2">
-              <h2 className="card-title text-lg font-semibold">{item.name}</h2>
-              <p className="text-sm text-gray-700 hidden lg:inline-block">
-                {item.description.length > 100 ? `${item.description.slice(0, 100)}...` : item.description}
-              </p>
+      <div className="grid lg:grid-cols-2 gap-6 lg:py-8 py-4">
+  {dish.slice(3, 5).map((item, index) => (
+    <div
+      key={index}
+      className="flex bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer lg:h-52 h-44 overflow-hidden"
+    >
+      {/* Image Section */}
+      <figure className="w-[40%] lg:w-[50%] h-full overflow-hidden">
+        <img
+          src={item.image}
+          alt={item.name}
+          className="object-cover w-full h-full transition-transform duration-500 hover:scale-105"
+        />
+      </figure>
 
-              <p className="text-sm text-gray-700 lg:hidden inline-block">
-                {item.description.length > 30 ? `${item.description.slice(0, 60)}...` : item.description}
-              </p>
+      {/* Content Section */}
+      <div className="flex flex-col justify-between p-4 w-full">
+        <div>
+          <h2 className="text-lg font-semibold text-gray-800 truncate">
+            {item.name}
+          </h2>
 
+          {/* Description with responsive length */}
+          <p className="text-sm text-gray-700 mt-2 hidden lg:block">
+            {item.description.length > 100
+              ? `${item.description.slice(0, 100)}...`
+              : item.description}
+          </p>
+          <p className="text-sm text-gray-700 mt-2 lg:hidden">
+            {item.description.length > 60
+              ? `${item.description.slice(0, 60)}...`
+              : item.description}
+          </p>
+        </div>
 
-              <Link to={`/dishes/${item._id}`} className="w-full">
-                <button className="btn bg-[--primary-color] hover:bg-[--secondary-color] text-white flex justify-center items-center gap-2 hover:translate-x-[-2px] duration-300 rounded-full capitalize px-6 py-2 w-full mt-2">
-                  more
-                </button>
-              </Link>
-            </div>
-          </div>
-        ))}
+        {/* Button */}
+        <Link to={`/dishes/${item._id}`} className="mt-4">
+          <button className="w-full bg-[--primary-color] hover:bg-[--secondary-color] text-white font-semibold py-2 rounded-full flex justify-center items-center gap-2 transition-transform duration-300 transform hover:-translate-y-1">
+            More
+          </button>
+        </Link>
       </div>
+    </div>
+  ))}
+</div>
+
     </div>
   );
 };

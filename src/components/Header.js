@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CiShoppingCart } from "react-icons/ci";
 import { Link } from "react-router-dom";
-
 import { AiOutlineClose } from "react-icons/ai"; // React Icon for close button
 import { useCart } from "../context/CartContext";
 import { useMyContext } from "../context/useContext";
@@ -10,19 +9,39 @@ const Header = () => {
   const { logoutUser, isLoggedIn, menu, setMenu } = useMyContext();
   const { cartItems } = useCart();
 
+  // Toggle menu function
   const toggleMenu = (e) => {
-    setMenu((e) => !e);
+    setMenu((prevMenu) => !prevMenu);
   };
+
+  // To stop propagation when clicking inside the menu
   const toggleMenuCon = (e) => {
     e.stopPropagation();
   };
 
+  // Use effect to handle background scroll lock
+  useEffect(() => {
+    if (!menu) {
+      // Lock background scroll when the menu is open
+      document.body.style.overflow = "hidden";
+    } else {
+      // Restore background scroll when the menu is closed
+      document.body.style.overflow = "auto";
+    }
+
+    // Cleanup the scroll lock when the component is unmounted or when menu state changes
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [menu]);
+
+
   return (
     <>
       <header className="shadow-md font-sans tracking-wide relative z-50">
-        <section className="py-2 bg-[--primary-color] text-white lg:text-right lg:px-10 px-4">
+        <section className="py-2 bg-[--primary-color] text-white lg:text-right lg:px-10 px-4 lg:block hidden">
           <p className="text-sm capitalize">
-            Get 40% & Free Shipping on your first order!
+            Enjoy 40% off plus free shipping on your first order!
           </p>
         </section>
 
@@ -155,16 +174,14 @@ const Header = () => {
         </div>
 
         <div
-          className={`${
-            menu ? "hidden" : ""
-          } fixed w-full h-screen bg-black bg-opacity-50 top-0 left-0 z-40`}
+          className={`${menu ? "hidden" : ""
+            } fixed w-full h-screen bg-black bg-opacity-50 top-0 left-0 z-40`}
           onClick={toggleMenu}
         >
           {/* Sidebar Container */}
           <div
-            className={`transform ${
-              menu ? "translate-x-[-100%]" : "translate-x-0"
-            } transition-transform duration-300 ease-in-out fixed w-[70%] h-screen bg-white left-0 py-10 px-6 z-50`}
+            className={`transform ${menu ? "translate-x-[-100%]" : "translate-x-0"
+              } transition-transform duration-300 ease-in-out fixed w-[70%] h-screen bg-white left-0 py-10 px-6 z-50`}
             onClick={toggleMenuCon}
           >
             {/* Header */}
@@ -180,10 +197,10 @@ const Header = () => {
               </button>
             </div>
 
-            {/* Navigation Links */}
+            {/* phone Navigation Links */}
             <div className="flex justify-between items-start flex-col h-[95%]">
               <ul className="space-y-4">
-                <li>
+                <li onClick={toggleMenu}>
                   <Link
                     to="/"
                     className="text-lg font-semibold text-gray-800 hover:text-[--primary-color]"
@@ -192,7 +209,7 @@ const Header = () => {
                   </Link>
                 </li>
                 {isLoggedIn && (
-                  <li>
+                  <li onClick={toggleMenu}>
                     <Link
                       to="/orders"
                       className="text-lg font-semibold text-gray-800 hover:text-[--primary-color]"
@@ -202,7 +219,7 @@ const Header = () => {
                   </li>
                 )}
                 {isLoggedIn && (
-                  <li>
+                  <li onClick={toggleMenu}>
                     <Link
                       to="/newdish"
                       className="text-lg font-semibold text-gray-800 hover:text-[--primary-color]"
@@ -211,7 +228,7 @@ const Header = () => {
                     </Link>
                   </li>
                 )}
-                <li>
+                <li onClick={toggleMenu}>
                   <Link
                     to="/catogery"
                     className="text-lg font-semibold text-gray-800 hover:text-[--primary-color]"

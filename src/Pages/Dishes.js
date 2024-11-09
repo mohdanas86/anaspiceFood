@@ -43,54 +43,65 @@ const Dishes = () => {
   return (
     <div className="w-full flex justify-center items-center lg:px-10 px-4 py-2 relative overflow-hidden">
       {dishes && dishes.length > 0 ? (
-        <div className="carousel carousel-center w-full flex overflow-x-auto snap-x snap-mandatory gap-6 py-6">
+        <div className="carousel carousel-center w-full flex overflow-x-auto snap-x snap-mandatory lg:gap-6 gap-2 py-6">
           {dishes.map((dish) => (
             <div
               key={dish._id}
-              className="card bg-white lg:w-[465px] w-[150px] flex-shrink-0 lg:shadow-lg shadow-none cursor-pointer snap-center"
-              onClick={() => handleClick(dish._id)} // Trigger the click handler to navigate
+              className="bg-white rounded-lg flex-shrink-0 lg:w-[346px] w-[10rem] shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer snap-center"
+              onClick={() => handleClick(dish._id)}
             >
+              {/* Dish Image */}
               {dish.image && (
-                <figure className="lg:h-[250px] h-[100px] overflow-hidden rounded-t-lg">
+                <figure className="h-[140px] lg:h-[200px] overflow-hidden rounded-t-lg">
                   <img
                     src={dish.image}
                     alt={dish.name}
-                    className="object-cover w-full h-full"
+                    className="object-cover w-full h-full transition-transform duration-500 hover:scale-105"
                   />
                 </figure>
               )}
-              <div className="card-body p-4">
-                <h2 className="card-title text-lg font-bold">{dish.name}</h2>
-                <p className="text-sm text-gray-600">
-                  {dish.description.length > 50
-                    ? dish.description.substring(0, 50) + "..."
-                    : dish.description}
-                </p>
-                <div className="text-xl font-semibold text-[--price-color] flex flex-col lg:flex-row justify-between items-center ">
-                  <span className="flex items-center gap-3">
+
+              {/* Card Body */}
+              <div className="p-4 flex flex-col space-y-2">
+                {/* Dish Name */}
+                <h2 className="text-lg font-bold text-gray-800 truncate">{dish.name}</h2>
+
+                {/* Dish Description */}
+                {/* <p className="text-sm text-gray-600">
+            {dish.description.length > 50
+              ? `${dish.description.substring(0, 50)}...`
+              : dish.description}
+          </p> */}
+
+                {/* Price and Discount */}
+                <div className="flex justify-between items-center text-gray-800 mt-2">
+                  <span className="text-base font-bold text-[--price-color]">
                     ₹{dish.price}
-                    <span className="text-base text-[--offer-color]">60% Off</span>
                   </span>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent the click event from bubbling up
-                      handleAddToCart(dish);
-                    }}
-                    className="btn bg-[--primary-color] hover:bg-[--secondary-color] text-white flex justify-center items-center lg:gap-4 hover:translate-x-[-5px] duration-300 mt-3 lg:mt-0"
-                  >
-                    <span className="hidden text-lg font-bold lg:flex justify-center items-center">
-                      <MdOutlineShoppingBag />
-                    </span>
-                    <span>Add to Cart</span>
-                  </button>
+                  <span className="text-xs text-red-500 bg-red-100 px-2 py-1 rounded-full">
+                    60% Off
+                  </span>
                 </div>
+
+                {/* Add to Cart Button */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleAddToCart(dish);
+                  }}
+                  className="mt-4 w-full bg-[--primary-color] hover:bg-[--secondary-color] text-white font-semibold py-2 rounded-lg flex justify-center items-center space-x-2 transition-transform duration-300 transform hover:-translate-y-1"
+                >
+                  <MdOutlineShoppingBag className="hidden lg:block text-xl" />
+                  <span>Add to Cart</span>
+                </button>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <p>Loading dishes...</p>
+        <p className="text-gray-600 text-center">Loading dishes...</p>
       )}
+
     </div>
   );
 };

@@ -10,7 +10,7 @@ const DishList = () => {
   const [dishes, setDishes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const {visibleCount} = useMyContext();
+  const { visibleCount } = useMyContext();
 
   const handleClick = (id) => {
     navigate(`/dishes/${id}`); // Assuming your DishInfo route is set up to handle this
@@ -30,7 +30,7 @@ const DishList = () => {
         setError("No dishes found for this category.");
       } else {
         setDishes(response.data);
-       localStorage.setItem("Category", JSON.stringify(response.data))
+        localStorage.setItem("Category", JSON.stringify(response.data));
       }
       setError(null); // Reset error state
     } catch (err) {
@@ -50,7 +50,7 @@ const DishList = () => {
       <div className="flex flex-col lg:flex-row lg:space-x-6 w-full">
         {/* Category Filter Component */}
         <div className="flex lg:w-[20%] pt-8 lg:pl-10 px-4 lg:bg-base-200">
-        <CategoryFilter onFilter={fetchDishes} />
+          <CategoryFilter onFilter={fetchDishes} />
         </div>
 
         {/* Display Dishes or Loading/Error */}
@@ -62,58 +62,63 @@ const DishList = () => {
             </p>
           )}
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 lg:gap-6 gap-4 lg:px-6 px-4">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 lg:p-6">
             {dishes.slice(0, visibleCount).map((dish, index) => (
               <div
                 key={index}
-                onClick={() => handleClick(dish._id)} // Trigger the click handler to navigate
-                className="bg-white p-4 rounded-lg shadow-lg hover:scale-105 transition-all flex flex-col justify-between"
+                onClick={() => handleClick(dish._id)}
+                className="bg-white lg:p-4 rounded-xl lg:shadow-md hover:shadow-lg hover:scale-[1.02] transition-all transform cursor-pointer flex flex-col justify-between"
               >
-                <img
-                  src={dish.image}
-                  alt={dish.name}
-                  className="w-full lg:h-40 h-32 object-cover rounded-md"
-                />
-                <h3 className="text-lg font-semibold text-gray-800 mt-4">
-                  {dish.name}
-                </h3>
+                {/* Dish Image */}
+                <div className="relative">
+                  <img
+                    src={dish.image}
+                    alt={dish.name}
+                    className="w-full h-40 md:h-48 object-cover rounded-lg"
+                  />
+                </div>
 
-                {/* description */}
-                <p className="text-gray-600 mt-2">
-                  {dish.description.length > 60 ? (
-                    <>{dish.description.slice(0, 60)}...</>
-                  ) : (
-                    dish.description
-                  )}
-                </p>
+                {/* Dish Details */}
+                <div className="mt-3 flex flex-col space-y-1">
+                  {/* Name */}
+                  <h3 className="text-lg font-semibold text-gray-800 truncate">
+                    {dish.name}
+                  </h3>
 
-                {/* Price and Star Rating */}
-                <div className="flex justify-between items-center space-x-1 mt-4">
-                  <p className="text-gray-700 font-bold mt-2">₹{dish.price}</p>
+                  {/* Description */}
+                  <p className="text-sm text-gray-600">
+                    {dish.description.length > 50
+                      ? `${dish.description.slice(0, 50)}...`
+                      : dish.description}
+                  </p>
+                </div>
 
-                  <span className="flex justify-center items-center">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <span
-                        key={star}
-                        className={`text-xl ${
-                          dish.rating >= star
-                            ? "text-yellow-500"
-                            : "text-gray-300"
-                        }`}
-                      >
-                        ★
-                      </span>
-                    ))}
-                  </span>
+                {/* Price and Rating */}
+                <div className="mt-4 flex justify-between items-center text-gray-700">
+                  {/* Price */}
+                  {/* <p className="text-base font-bold text-green-600">
+                    ₹{dish.price}
+                  </p> */}
+
+                  {/* Rating */}
+                  <div className="flex items-center space-x-1">
+                    <span className="bg-green-600 text-white w-[20px] h-[20px] rounded-full flex items-center justify-center text-lg">
+                      ★
+                    </span>
+                    <span className="text-sm font-semibold">{dish.rating}</span>
+                  </div>
+
+                  {/* Preparation Time */}
+                  <div className=" text-gray-500 text-sm">
+                    {dish.preparation_time.replace("minutes", "mins")}
+                  </div>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Show More Button */}
-          {visibleCount < dishes.length && (
-           <ShowMoreBtn />
-          )}
+          {visibleCount < dishes.length && <ShowMoreBtn />}
         </div>
       </div>
     </div>
