@@ -49,7 +49,7 @@ const RecomendedationContainer = () => {
 
       <div className="w-full flex flex-col items-center py-6">
         {dishes && dishes.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6 gap-2 w-full">
+          <div className="grid grid-cols-2 lg:grid-cols-2 lg:gap-6 gap-2 w-full">
             {dishes.slice(0, visibleCount).map((dish) => (
               <div
                 key={dish._id}

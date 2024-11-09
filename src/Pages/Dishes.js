@@ -3,16 +3,22 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { MdOutlineShoppingBag } from "react-icons/md";
+import SquareSkelton from "../components/skeltons/SquareSkelton";
+import SkeletonGrid from "../components/skeltons/SquareSkelton";
 
 const Dishes = () => {
-  const [dishes, setDishes] = useState(JSON.parse(localStorage.getItem('dish')) || []);
+  const [dishes, setDishes] = useState(
+    JSON.parse(localStorage.getItem("dish")) || []
+  );
   const navigate = useNavigate();
   const { addToCart } = useCart();
 
   // Fetch dishes from API and save them to state and local storage
   const fetchDishes = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/dishes`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/api/dishes`
+      );
       const fetchedDishes = response.data.data;
       setDishes(fetchedDishes);
       localStorage.setItem("dish", JSON.stringify(fetchedDishes)); // Store fetched data in localStorage
@@ -64,7 +70,9 @@ const Dishes = () => {
               {/* Card Body */}
               <div className="p-4 flex flex-col space-y-2">
                 {/* Dish Name */}
-                <h2 className="text-lg font-bold text-gray-800 truncate">{dish.name}</h2>
+                <h2 className="text-lg font-bold text-gray-800 truncate">
+                  {dish.name}
+                </h2>
 
                 {/* Dish Description */}
                 {/* <p className="text-sm text-gray-600">
@@ -99,9 +107,10 @@ const Dishes = () => {
           ))}
         </div>
       ) : (
-        <p className="text-gray-600 text-center">Loading dishes...</p>
+        <div className="w-full">
+          <SkeletonGrid />
+        </div>
       )}
-
     </div>
   );
 };

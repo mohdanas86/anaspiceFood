@@ -4,6 +4,7 @@ import CategoryFilter from "./CategoryFilter"; // Import the CategoryFilter comp
 import { useNavigate } from "react-router-dom";
 import { useMyContext } from "../../context/useContext";
 import ShowMoreBtn from "../../components/ShowMoreBtn";
+import RowSkelton from "../../components/skeltons/RowSkelton";
 
 const DishList = () => {
   const navigate = useNavigate();
@@ -55,7 +56,13 @@ const DishList = () => {
 
         {/* Display Dishes or Loading/Error */}
         <div className="lg:flex-1 lg:w-[80%] w-full pb-8">
-          {loading && <p className="text-center text-gray-500">Loading...</p>}
+          {loading && (
+            <>
+              <RowSkelton />
+              <RowSkelton />
+              <RowSkelton />
+            </>
+          )}
           {error && (
             <p className="text-center text-red-500 capitalize">
               No Dish Like this.
