@@ -118,6 +118,14 @@ const Header = () => {
                   Catogery
                 </Link>
               </li>
+              <li className="max-lg:border-b max-lg:py-3 px-3">
+                <Link
+                  to="/profile"
+                  className="hover:text-[--primary-color] text-[#333] block font-bold text-[15px]"
+                >
+                  Setting
+                </Link>
+              </li>
 
               <li className="max-lg:border-b max-lg:py-3 px-3">
                 {isLoggedIn ? (
@@ -236,7 +244,15 @@ const Header = () => {
                     Category
                   </Link>
                 </li>
-              </ul>
+                <li onClick={toggleMenu}>
+                  <Link
+                    to="/profile"
+                    className="text-lg font-semibold text-gray-800 hover:text-[--primary-color]"
+                  >
+                    Setting
+                  </Link>
+                </li>
+                  </ul>
 
               {/* Cart Icon */}
               <div className="flex w-full justify-between items-center">

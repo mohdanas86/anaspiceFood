@@ -25,7 +25,7 @@ const SignIn = () => {
     try {
       const url = `${process.env.REACT_APP_BACKEND_URL}/api/login`;
       const response = await axios.post(url, formData);
-      console.log(response.data.token);
+      // console.log(response.data.token);
       const auth_token = await response.data.token;
       setServerToken(auth_token);
 

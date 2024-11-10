@@ -1,8 +1,10 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 const MyContext = createContext();
 
 export const MyProvider = ({ children }) => {
+  const Navigate = useNavigate();
   const [menu, setMenu] = useState(true);
   const [visibleCount, setVisibleCount] = useState(6);
   const [user, setUser] = useState(localStorage.getItem('user'));
@@ -58,6 +60,7 @@ export const MyProvider = ({ children }) => {
     localStorage.removeItem("cartItems");
     setLogin(false);
     setUser('');
+    Navigate("/signin")
   }
 
   const handleShowMore = () => {

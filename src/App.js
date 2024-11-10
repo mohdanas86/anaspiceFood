@@ -14,6 +14,7 @@ import NewDish from './Pages/admin/NewDish';
 import DishInfo from './components/DishInfo';
 import Checkout from './Pages/checkout/Checkout';
 import DishList from './Pages/category/DishList';
+import UseProfile from './components/UseProfile';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/newdish" element={<NewDish />} />
             <Route path="/dishes/:id" element={<DishInfo />} />
             <Route path="/catogery" element={<DishList />} />
+            <Route path="/profile" element={<UseProfile />} />
           </Routes>
           <Footer />
         </CartProvider>
