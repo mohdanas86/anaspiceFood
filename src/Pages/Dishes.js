@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { MdOutlineShoppingBag } from "react-icons/md";
-import SquareSkelton from "../components/skeltons/SquareSkelton";
 import SkeletonGrid from "../components/skeltons/SquareSkelton";
 
 const Dishes = () => {
