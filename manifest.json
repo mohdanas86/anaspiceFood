@@ -1,0 +1,25 @@
+{
+  "short_name": "AnaSpice",
+  "name": "AnaSpice - Discover Flavorful Food",
+  "icons": [
+    {
+      "src": "https://anaspice.netlify.app/logo-removebg-preview.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "https://anaspice.netlify.app/logo-removebg-preview.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://anaspice.netlify.app/logo-removebg-preview.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#FF5722",
+  "background_color": "#ffffff"
+}

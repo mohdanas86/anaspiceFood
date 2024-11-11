@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/anaspiceFood/static/css/main.7764e382.css",
+    "main.js": "/anaspiceFood/static/js/main.b2403918.js",
+    "static/js/453.0647398c.chunk.js": "/anaspiceFood/static/js/453.0647398c.chunk.js",
+    "index.html": "/anaspiceFood/index.html",
+    "main.7764e382.css.map": "/anaspiceFood/static/css/main.7764e382.css.map",
+    "main.b2403918.js.map": "/anaspiceFood/static/js/main.b2403918.js.map",
+    "453.0647398c.chunk.js.map": "/anaspiceFood/static/js/453.0647398c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7764e382.css",
+    "static/js/main.b2403918.js"
+  ]
+}
