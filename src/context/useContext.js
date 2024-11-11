@@ -11,6 +11,8 @@ export const MyProvider = ({ children }) => {
   const [login, setLogin] = useState(false);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
+  const cheackuser = JSON.parse(localStorage.getItem("user"));
+  const isAdmin = cheackuser?.isAdmin === "true";
 
   const setServerToken = (serverToken) => {
     setToken(serverToken);
@@ -76,7 +78,7 @@ export const MyProvider = ({ children }) => {
       visibleCount,
       setVisibleCount,
       handleShowMore,
-      menu, setMenu
+      menu, setMenu, isAdmin
     }}>
       {children}
     </MyContext.Provider>

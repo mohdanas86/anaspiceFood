@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 
 import Header from './components/Header';
@@ -15,8 +15,22 @@ import DishInfo from './components/DishInfo';
 import Checkout from './Pages/checkout/Checkout';
 import DishList from './Pages/category/DishList';
 import UseProfile from './components/UseProfile';
+import { useEffect, useState } from 'react';
 
 function App() {
+  // State to store the user and isAdmin status
+  // const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    // Retrieve user data from localStorage on mount
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+      // setUser(storedUser);
+      setIsAdmin(storedUser.isAdmin === 'true');
+    }
+  }, []); // Empty dependency array ensures this only runs once on mount
+
   return (
     <BrowserRouter>
       <MyProvider>
@@ -24,15 +38,16 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/orders" element={<Orders />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/orders" element={<Orders />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/newdish" element={<NewDish />} />
             <Route path="/dishes/:id" element={<DishInfo />} />
+            <Route path="/checkout" element={<Checkout />} />
             <Route path="/catogery" element={<DishList />} />
             <Route path="/profile" element={<UseProfile />} />
+            {/* Conditionally render the NewDish route based on isAdmin */}
+            <Route path="/newdish" element={isAdmin ? <NewDish /> : <Navigate to="/" />} />
           </Routes>
           <Footer />
         </CartProvider>

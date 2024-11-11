@@ -6,7 +6,7 @@ import { useCart } from "../context/CartContext";
 import { useMyContext } from "../context/useContext";
 
 const Header = () => {
-  const { logoutUser, isLoggedIn, menu, setMenu } = useMyContext();
+  const { logoutUser, isLoggedIn, menu, setMenu, isAdmin } = useMyContext();
   const { cartItems } = useCart();
 
   // Toggle menu function
@@ -97,7 +97,7 @@ const Header = () => {
                 ""
               )}
 
-              {isLoggedIn ? (
+              {isAdmin ? (
                 <li className="max-lg:border-b max-lg:py-3 px-3">
                   <Link
                     to="/newdish"
@@ -118,14 +118,15 @@ const Header = () => {
                   Catogery
                 </Link>
               </li>
-              <li className="max-lg:border-b max-lg:py-3 px-3">
+
+              {isLoggedIn && (<li className="max-lg:border-b max-lg:py-3 px-3">
                 <Link
                   to="/profile"
                   className="hover:text-[--primary-color] text-[#333] block font-bold text-[15px]"
                 >
                   Setting
                 </Link>
-              </li>
+              </li>)}
 
               <li className="max-lg:border-b max-lg:py-3 px-3">
                 {isLoggedIn ? (
@@ -226,7 +227,7 @@ const Header = () => {
                     </Link>
                   </li>
                 )}
-                {isLoggedIn && (
+                {isAdmin && (
                   <li onClick={toggleMenu}>
                     <Link
                       to="/newdish"
@@ -244,15 +245,16 @@ const Header = () => {
                     Category
                   </Link>
                 </li>
-                <li onClick={toggleMenu}>
+
+                {isLoggedIn && (<li onClick={toggleMenu}>
                   <Link
                     to="/profile"
                     className="text-lg font-semibold text-gray-800 hover:text-[--primary-color]"
                   >
                     Setting
                   </Link>
-                </li>
-                  </ul>
+                </li>)}
+              </ul>
 
               {/* Cart Icon */}
               <div className="flex w-full justify-between items-center">
