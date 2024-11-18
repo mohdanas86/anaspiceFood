@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { FaEdit, FaSignOutAlt } from "react-icons/fa";
 import { useMyContext } from "../context/useContext";
