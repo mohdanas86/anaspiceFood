@@ -16,6 +16,7 @@ import Checkout from './Pages/checkout/Checkout';
 import DishList from './Pages/category/DishList';
 import UseProfile from './components/UseProfile';
 import { useEffect, useState } from 'react';
+import ManageOrder from './Pages/admin/ManageOrder';
 
 function App() {
   // State to store the user and isAdmin status
@@ -46,8 +47,10 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/catogery" element={<DishList />} />
             <Route path="/profile" element={<UseProfile />} />
+
             {/* Conditionally render the NewDish route based on isAdmin */}
             <Route path="/newdish" element={isAdmin ? <NewDish /> : <Navigate to="/" />} />
+            <Route path="/all/orders" element={isAdmin ? <ManageOrder /> : <Navigate to="/" />} />
           </Routes>
           <Footer />
         </CartProvider>

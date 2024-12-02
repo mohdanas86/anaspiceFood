@@ -1,9 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import PageNav from "../components/PageNav";
+import RateDish from "../components/RateDish";
+import { useNavigate } from "react-router-dom";
 
 // Component to render individual order details
-const OrderCard = ({ order }) => {
+const OrderCard = ({ order, isRateNow, toggleRateNow }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    navigate(`/dishes/${e}`);
+  };
+
   return (
     <div
       key={order._id}
@@ -20,14 +28,20 @@ const OrderCard = ({ order }) => {
         <div className="text-gray-700 space-y-1">
           <div className="flex items-center">
             <span className="text-gray-600">Name </span>
-            <span className="font-semibold text-gray-800 ml-1">{order.name}</span>
+            <span className="font-semibold text-gray-800 ml-1">
+              {order.name}
+            </span>
           </div>
 
           <div className="flex items-center">
             <span className="text-gray-600">Status </span>
             <span
               className={`${
-                order.status === "Delivered" ? "text-green-500" : "text-[#ff7f50]"
+                order.status === "pending"
+                  ? "text-[--primary-color]"
+                  : order.status === "completed"
+                  ? "text-[--price-color]"
+                  : "text-red-500"
               } font-medium ml-1`}
             >
               {order.status}
@@ -45,7 +59,7 @@ const OrderCard = ({ order }) => {
             <span className="text-gray-600">Address </span>
             <span className="font-semibold text-gray-800 ml-1">
               <span>{order.shippingInfo.address} </span>
-              <span>{order.shippingInfo.city} </span> 
+              <span>{order.shippingInfo.city} </span>
               <span>{order.shippingInfo.zipCode}</span>
             </span>
           </div>
@@ -55,8 +69,9 @@ const OrderCard = ({ order }) => {
         <div className="space-y-4 w-full">
           {order.dishes.map((dish, index) => (
             <div
+              onClick={() => handleClick(dish.dishId)}
               key={index}
-              className="flex items-center gap-4 p-3 bg-gray-100 rounded-lg shadow-sm"
+              className="flex items-center gap-4 p-3 bg-gray-100 rounded-lg shadow-sm cursor-pointer"
             >
               {dish.image && (
                 <img
@@ -73,12 +88,41 @@ const OrderCard = ({ order }) => {
             </div>
           ))}
         </div>
+
+        <div className="flex items-center justify-between text-xl mt-6">
+          <span className="text-gray-600">Total Amount </span>
+          <span className="font-bold ml-1">₹{order.totalAmount}</span>
+        </div>
       </div>
 
-      <div className="flex items-center justify-between text-xl">
-        <span className="text-gray-600">Total Amount </span>
-        <span className="font-bold ml-1">₹{order.totalAmount}</span>
-      </div>
+      {!order.isRated && order.status === "completed" ? (
+        <div className={`flex flex-col justify-center items-center w-full `}>
+          <div className="mx-auto w-full">
+            <button
+              onClick={() => toggleRateNow(order._id)}
+              className={`${
+                isRateNow ? "hidden" : "flex"
+              } text-white py-2 px-4 rounded-lg bg-[--primary-color]`}
+            >
+              Rate now
+            </button>
+          </div>
+
+          <div
+            className={`${
+              !isRateNow ? "hidden" : "flex"
+            } w-full justify-center items-center`}
+          >
+            <RateDish
+              id={order.dishes[0].dishId}
+              orderId={order._id}
+              isRated={order.isRated}
+            />
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
@@ -87,6 +131,7 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeCard, setActiveCard] = useState(null);
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -101,12 +146,15 @@ const Orders = () => {
       setError("Error fetching orders. Please try again.");
       setLoading(false);
     }
-  }, [user._id]);  // Only recreate handleOrder if user._id changes
+  }, [user._id]);
 
   useEffect(() => {
     handleOrder();
-  }, [handleOrder]);  // Effect depends on handleOrder
-  
+  }, [handleOrder]);
+
+  const toggleRateNow = (orderId) => {
+    setActiveCard((prev) => (prev === orderId ? null : orderId));
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -118,15 +166,20 @@ const Orders = () => {
 
   return (
     <div className="w-full flex flex-col items-center py-6 min-h-[59.5vh]">
-      {/* <h2 className="text-3xl font-semibold mb-6">Your Orders</h2> */}
       <div className="flex lg:pl-14 pl-4 w-full pb-4">
-      <PageNav title={"Your Orders"}/>
+        <PageNav title={"Your Orders"} />
       </div>
 
       {orders.length > 0 ? (
-        <div className="w-full lg:w-[80%] grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4">
+        // <div className="w-full lg:w-[80%] grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4">
+        <div className="w-full lg:w-[80%] flex flex-wrap gap-6 justify-start items-start px-4">
           {orders.map((order) => (
-            <OrderCard key={order._id} order={order} />
+            <OrderCard
+              key={order._id}
+              order={order}
+              isRateNow={activeCard === order._id}
+              toggleRateNow={toggleRateNow}
+            />
           ))}
         </div>
       ) : (

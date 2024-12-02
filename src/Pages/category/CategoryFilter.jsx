@@ -7,21 +7,29 @@ const CategoryFilter = ({ onFilter }) => {
     <div className="mb-4">
       <h3 className="text-xl font-semibold mb-2">Filter by Category</h3>
       <ul className="space-y-2 hidden lg:block">
-        {categories.map((category, index) => (
-          <li key={index}>
-            <button
-              onClick={() => onFilter(category)} // Pass selected category to onFilter
-              className="text-[--primary-color] hover:text-[--secondary-color]"
+        <div className="flex flex-wrap items-center gap-2">
+          {categories.map((category, index) => (
+            <li
+              key={index}
+              className="border bg-white rounded-lg hover:bg-gray-100 py-2 px-4"
             >
-              {category}
-            </button>
-          </li>
-        ))}
+              <button
+                onClick={() => onFilter(category)} // Pass selected category to onFilter
+                className="text-slate-900"
+              >
+                {category}
+              </button>
+            </li>
+          ))}
+        </div>
       </ul>
 
       <ul className="menu-horizontal lg:hidden rounded-box flex flex-wrap gap-2">
         {categories.map((category, index) => (
-          <li key={index} className="border bg-white rounded-lg hover:bg-gray-100 py-2 px-4">
+          <li
+            key={index}
+            className="border bg-white rounded-lg hover:bg-gray-100 py-2 px-4"
+          >
             <button
               onClick={() => onFilter(category)} // Pass selected category to onFilter
               className="text-slate-900"

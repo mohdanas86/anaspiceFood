@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FaEdit, FaSignOutAlt } from "react-icons/fa";
 import { useMyContext } from "../context/useContext";
+import { Link } from "react-router-dom";
 
 const ProfilePage = () => {
   const { logoutUser } = useMyContext();
@@ -12,6 +13,7 @@ const ProfilePage = () => {
     username: user?.username || "",
     email: user?.email || "",
   });
+
 
   const [error, setError] = useState("");
 
@@ -32,28 +34,31 @@ const ProfilePage = () => {
   // Handle Save and send PATCH request to update user
   const handleSave = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const { username, email } = formData; // Destructure formData here
-      const userId = user._id; // Get the userId from the state
+      const token = localStorage.getItem("token"); // Retrieve token from localStorage
+      const { username, email } = formData; // Destructure formData
+      const userId = user._id; // Extract userId from state
 
+      // Make the API request to update the profile
       const response = await axios.patch(
         `${process.env.REACT_APP_BACKEND_URL}/api/update-profile`,
-        { username, email, userId }, // Send individual fields
+        { username, email, userId }, // Payload
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Add token to the headers for authentication
+            Authorization: `Bearer ${token}`, // Attach token for authentication
           },
         }
       );
 
-      // If the request is successful, update localStorage and user state
-      localStorage.setItem("user", JSON.stringify(response.data.data));
-      setUser(response.data.data);
-      console.log(response.data);
-      setIsEditing(false); // Close the edit form
+      // Update localStorage and state with the new user data
+      const updatedUser = response.data.data;
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      setUser(updatedUser);
+      console.log("Profile updated successfully:", response.data);
+
+      setIsEditing(false); // Exit edit mode
     } catch (err) {
-      console.log(err);
-      setError("Failed to update profile");
+      console.error("Failed to update profile:", err);
+      setError(err.response?.data?.message || "Failed to update profile"); // More specific error message
     }
   };
 
@@ -145,6 +150,17 @@ const ProfilePage = () => {
         </div>
 
         {error && <div className="text-red-500 text-center mt-4">{error}</div>}
+
+        {/* ALL ORDERS FOR ADMIN */}
+        {user && user.isAdmin === "true" ? (
+          <Link to="/all/orders">
+            <button className="border-0 rounded-md bg-[--primary-color] hover:bg-[--secondary-color] text-white py-2 w-full">
+              Manage orders
+            </button>
+          </Link>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
