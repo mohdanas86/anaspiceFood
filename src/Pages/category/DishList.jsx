@@ -50,7 +50,7 @@ const DishList = () => {
     <div className="container mx-auto bg-white">
       <div className="flex flex-col lg:flex-row lg:space-x-6 w-full">
         {/* Category Filter Component */}
-        <div className="flex lg:w-[20%] pt-8 lg:pl-10 px-4 lg:bg-base-200">
+        <div className="flex lg:w-[20%] pt-8 lg:pl-10 px-4">
           <CategoryFilter onFilter={fetchDishes} />
         </div>
 
@@ -74,7 +74,7 @@ const DishList = () => {
               <div
                 key={index}
                 onClick={() => handleClick(dish._id)}
-                className="bg-white lg:p-4 rounded-xl lg:shadow-md hover:shadow-lg hover:scale-[1.02] transition-all transform cursor-pointer flex flex-col justify-between"
+                className="bg-white lg:p-4 rounded-xl lg:shadow-md lg:hover:shadow-lg hover:scale-[1.02] transition-all transform cursor-pointer flex flex-col justify-between"
               >
                 {/* Dish Image */}
                 <div className="relative">
@@ -112,7 +112,9 @@ const DishList = () => {
                     <span className="bg-green-600 text-white w-[20px] h-[20px] rounded-full flex items-center justify-center text-lg">
                       ★
                     </span>
-                    <span className="text-sm font-semibold">{dish.rating}</span>
+                    <span className="text-sm font-semibold">
+                      {dish.rating.toFixed(1)}
+                    </span>
                   </div>
 
                   {/* Preparation Time */}

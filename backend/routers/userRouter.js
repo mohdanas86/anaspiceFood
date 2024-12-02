@@ -70,33 +70,65 @@ userRouter.post("/register", async (req, res) => {
 });
 
 // UPDATE USER DATA
+// userRouter.patch("/update-profile", async (req, res) => {
+//     try {
+//         const { username, email, userId } = req.body; // Destructure the data received in the request
+
+//         // Update the user with the provided userId
+//         const update = await userModel.findByIdAndUpdate(
+//             userId, // Use findByIdAndUpdate and pass userId
+//             { username, email }, // Fields to update
+//             { new: true } // Return the updated document
+//         );
+
+//         console.log(update)
+
+//         if (!update) {
+//             return res.status(404).json({ message: "User not found" });
+//         }
+
+//         return res.status(200).json({
+//             message: "User updated successfully",
+//             data: update,
+//         });
+//     } catch (err) {
+//         console.log("Error updating user :", err);
+//         return res.status(500).json({
+//             message: "Error updating user",
+//             error: err,
+//         });
+//     }
+// });
+
 userRouter.patch("/update-profile", async (req, res) => {
     try {
-      const { username, email, userId } = req.body; // Destructure the data received in the request
-  
-      // Update the user with the provided userId
-      const update = await userModel.findByIdAndUpdate(
-        userId, // Use findByIdAndUpdate and pass userId
-        { username, email }, // Fields to update
-        { new: true } // Return the updated document
-      );
-  
-      if (!update) {
-        return res.status(404).json({ message: "User not found" });
-      }
-  
-      return res.status(200).json({
-        message: "User updated successfully",
-        data: update,
-      });
+        const { username, email, userId } = req.body; // Destructure data from the request body
+
+        // Update the user by userId
+        const update = await userModel.findByIdAndUpdate(
+            userId,                // Use findByIdAndUpdate with userId
+            { username, email },   // Fields to update
+            { new: true }          // Return the updated document
+        );
+
+        console.log(update);
+
+        if (!update) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        return res.status(200).json({
+            message: "User updated successfully",
+            data: update,
+        });
     } catch (err) {
-      console.log(err);
-      return res.status(500).json({
-        message: "Error updating user",
-        error: err,
-      });
+        console.error("Error updating user:", err);
+        return res.status(500).json({
+            message: "Error updating user",
+            error: err.message || err, // Ensure meaningful error response
+        });
     }
-  });
-  
+});
+
 
 export default userRouter;

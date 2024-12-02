@@ -51,6 +51,11 @@ const orderSchema = new mongoose.Schema({
         required: true,
         min: 0 // Ensure total amount is non-negative
     },
+    isRated: {
+        type: Boolean,
+        enum: [true, false],
+        default: false
+    },
     status: {
         type: String,
         enum: ["pending", "completed", "cancelled"], // Limit to specific statuses

@@ -1,29 +1,65 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const RateDish = ({ id }) => {
+const RateDish = ({ id, orderId, isRated }) => {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState(""); // Review state
   const [username, setUsername] = useState(""); // Username state
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const url = `${process.env.REACT_APP_BACKEND_URL}/api/dishes/${id}/rate`;
+  //     const orderUrl = `${process.env.REACT_APP_BACKEND_URL}/api/order/israted`;
+
+  //     const response = await axios.post(url, { rating, review, username });
+  //     const orderRatedStatus = await axios.patch(orderUrl, { orderId }, { isRated: isRated === true ? true : true }, { new: true });
+
+  //     console.log("Rating : ", response);
+  //     console.log("isRated : ", orderRatedStatus);
+
+  //     setRating(0);      // Reset rating
+  //     setReview("");      // Reset review
+  //     setUsername("");    // Reset username
+  //   } catch (error) {
+  //     console.error(error);
+  //     alert("Error submitting rating and review");
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const url = `${process.env.REACT_APP_BACKEND_URL}/api/dishes/${id}/rate`;
-      const response = await axios.post(url, { rating, review, username });
-      console.log(response);
-      setRating(0);      // Reset rating
-      setReview("");      // Reset review
-      setUsername("");    // Reset username
+        const url = `${process.env.REACT_APP_BACKEND_URL}/api/dishes/${id}/rate`;
+        const orderUrl = `${process.env.REACT_APP_BACKEND_URL}/api/order/israted`;
+
+        // Submit rating and review
+        const response = await axios.post(url, { rating, review, username });
+
+        // Update the order's rated status
+        const orderRatedStatus = await axios.patch(orderUrl, {
+            orderId,
+            isRated: true // Explicitly set to true
+        });
+
+        console.log("Rating submitted:", response.data);
+        console.log("Order rated status updated:", orderRatedStatus.data);
+
+        // Reset form inputs
+        setRating(0);
+        setReview("");
+        setUsername("");
     } catch (error) {
-      console.error(error);
-      alert("Error submitting rating and review");
+        console.error("Error submitting rating or updating order:", error);
+        alert("Error submitting rating and review.");
     }
-  };
+};
+
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 p-6 max-w-sm bg-white shadow-lg rounded-lg">
+    <form onSubmit={handleSubmit} className="space-y-6 pt-6 max-w-sm">
       <h2 className="text-2xl font-semibold text-center text-gray-800">Rate & Review This Dish</h2>
 
       {/* Star Rating */}
