@@ -8,7 +8,7 @@
     "build": "npx netlify-lambda build src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "type": "commonjs",
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
