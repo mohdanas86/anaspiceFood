@@ -195,7 +195,7 @@ const Header = () => {
           >
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
-              <Link to="/" className="text-xl font-semibold text-gray-800">
+              <Link to="/" className="text-xl font-semibold text-gray-800" onClick={toggleMenu}>
                 AnaSpice
               </Link>
               <button
@@ -260,13 +260,18 @@ const Header = () => {
               <div className="flex w-full justify-between items-center">
                 {isLoggedIn ? (
                   <button
-                    onClick={logoutUser}
+                  onClick={() => {
+                    logoutUser();
+                    toggleMenu();
+                  }}
+                  
                     className="text-lg font-semibold bg-[--primary-color] hover:bg-[--secondary-color] text-white rounded-xl border-0 px-5 py-2"
                   >
                     Logout
                   </button>
                 ) : (
                   <Link
+                  onClick={toggleMenu}
                     to="/signin"
                     className="text-lg font-semibold text-gray-800 hover:text-[--primary-color]"
                   >
@@ -281,7 +286,7 @@ const Header = () => {
                         {cartItems.length}
                       </span>
                     )}
-                    <button className="text-3xl text-gray-700">
+                    <button className="text-3xl text-gray-700" onClick={toggleMenu}>
                       <CiShoppingCart />
                     </button>
                   </div>

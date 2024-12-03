@@ -17,6 +17,7 @@ import DishList from './Pages/category/DishList';
 import UseProfile from './components/UseProfile';
 import { useEffect, useState } from 'react';
 import ManageOrder from './Pages/admin/ManageOrder';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   // State to store the user and isAdmin status
@@ -34,6 +35,7 @@ function App() {
 
   return (
     <BrowserRouter>
+    <Toaster position="bottom-right" reverseOrder={false} />
       <MyProvider>
         <CartProvider>
           <Header />
