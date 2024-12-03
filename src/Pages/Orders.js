@@ -165,7 +165,7 @@ const Orders = () => {
   }
 
   return (
-    <div className="w-full flex flex-col items-center py-6 min-h-[59.5vh]">
+    <div className="w-full flex flex-col items-center py-6 min-h-screen">
       <div className="flex lg:pl-14 pl-4 w-full pb-4">
         <PageNav title={"Your Orders"} />
       </div>

@@ -13,7 +13,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="container min-h-[59.5vh] mx-auto lg:py-6 lg:px-12 p-4">
+    <div className="container min-h-screen mx-auto lg:py-6 lg:px-12 p-4">
       {/* <h2 className="text-2xl font-bold mb-4">Shopping Cart</h2> */}
       <div className="flex lg:pb-8 pb-4">
         <PageNav title={"Shopping Cart"} />

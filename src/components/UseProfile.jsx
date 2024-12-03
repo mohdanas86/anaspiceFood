@@ -3,6 +3,8 @@ import axios from "axios";
 import { FaEdit, FaSignOutAlt } from "react-icons/fa";
 import { useMyContext } from "../context/useContext";
 import { Link } from "react-router-dom";
+import Loader from "../components/Loader";
+import { toast } from "react-hot-toast";
 
 const ProfilePage = () => {
   const { logoutUser } = useMyContext();
@@ -16,6 +18,7 @@ const ProfilePage = () => {
 
 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Handle form field changes
   const handleChange = (e) => {
@@ -33,6 +36,7 @@ const ProfilePage = () => {
 
   // Handle Save and send PATCH request to update user
   const handleSave = async () => {
+    setLoading(true);
     try {
       const token = localStorage.getItem("token"); // Retrieve token from localStorage
       const { username, email } = formData; // Destructure formData
@@ -55,15 +59,22 @@ const ProfilePage = () => {
       setUser(updatedUser);
       console.log("Profile updated successfully:", response.data);
 
+      toast.success("Profile updated");
       setIsEditing(false); // Exit edit mode
     } catch (err) {
-      console.error("Failed to update profile:", err);
+      console.log("Failed to update profile:", err);
+      toast.error("Failed to update profile");
       setError(err.response?.data?.message || "Failed to update profile"); // More specific error message
-    }
+    }finally {
+      setLoading(false);
+  }
   };
 
   return (
-    <div className="min-h-screen flex  items-start lg:items-center justify-center">
+   <>
+   {loading && <Loader />}
+
+   <div className="min-h-screen flex  items-start lg:items-center justify-center">
       <div className="bg-white lg:rounded-xl lg:shadow-xl w-full max-w-lg p-8">
         {/* Profile Header */}
         <div className="text-center mb-8">
@@ -163,6 +174,7 @@ const ProfilePage = () => {
         )}
       </div>
     </div>
+   </>
   );
 };
 

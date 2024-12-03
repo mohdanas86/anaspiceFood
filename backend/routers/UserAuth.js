@@ -10,7 +10,7 @@ async function getUserAuth(req, res) {
     try {
         const data = req.user;
 
-        console.log("Logged in user data: ", data);
+        // console.log("Logged in user data: ", data);
         return res.json({ data });
 
     } catch (err) {

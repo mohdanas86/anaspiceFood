@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "../../context/CartContext"; // Import the CartContext
 import { AiOutlineDelete } from "react-icons/ai";
+import Loader from "../../components/Loader";
+import { toast } from "react-hot-toast";
 
 import { FaUser, FaCity, FaAddressCard, FaLock, FaCcVisa, FaCcPaypal } from "react-icons/fa";
 import PageNav from "../../components/PageNav";
@@ -119,6 +121,7 @@ const Checkout = () => {
       const data = await response.json();
 
       if (response.ok) {
+        toast.success("order to placed.");
         // Order placed successfully, clear the cart items
         setCartItems([]); // Clear cart items in the context
         localStorage.setItem("cartItems", JSON.stringify([])); // Clear cart in local storage
@@ -127,6 +130,7 @@ const Checkout = () => {
         throw new Error(data.message || "Failed to place the order. Please try again.");
       }
     } catch (err) {
+      toast.error("Failed to place the order. Please try again.");
       setError("Failed to place the order. Please try again.");
     } finally {
       setLoading(false);
@@ -138,8 +142,10 @@ const Checkout = () => {
   }, [cartItems]);
 
   return (
-    <div className="container min-h-[59.5vh] mx-auto">
+    <div className="container min-h-screen mx-auto">
+{loading && <Loader />}
       {/* <h2 className="text-2xl font-bold mb-4">Checkout</h2> */}
+
 
       {cartItems.length > 0 ? (
         <>
@@ -408,7 +414,7 @@ const Checkout = () => {
                       className="mt-4 w-full bg-[--primary-color] text-white px-12 py-3 rounded-full duration-300 hover:bg-[--secondary-color]"
                       disabled={loading}
                     >
-                      {loading ? "Processing..." : "Place Order"}
+                      Checkout
                     </button>
                   </div>
 
