@@ -3,10 +3,13 @@ import axios from "axios";
 import PageNav from "../components/PageNav";
 import RateDish from "../components/RateDish";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
+import { toast } from "react-hot-toast";
 
 // Component to render individual order details
 const OrderCard = ({ order, isRateNow, toggleRateNow }) => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleClick = (e) => {
     navigate(`/dishes/${e}`);
@@ -36,13 +39,12 @@ const OrderCard = ({ order, isRateNow, toggleRateNow }) => {
           <div className="flex items-center">
             <span className="text-gray-600">Status </span>
             <span
-              className={`${
-                order.status === "pending"
+              className={`${order.status === "pending"
                   ? "text-[--primary-color]"
                   : order.status === "completed"
-                  ? "text-[--price-color]"
-                  : "text-red-500"
-              } font-medium ml-1`}
+                    ? "text-[--price-color]"
+                    : "text-red-500"
+                } font-medium ml-1`}
             >
               {order.status}
             </span>
@@ -100,18 +102,16 @@ const OrderCard = ({ order, isRateNow, toggleRateNow }) => {
           <div className="mx-auto w-full">
             <button
               onClick={() => toggleRateNow(order._id)}
-              className={`${
-                isRateNow ? "hidden" : "flex"
-              } text-white py-2 px-4 rounded-lg bg-[--primary-color]`}
+              className={`${isRateNow ? "hidden" : "flex"
+                } text-white py-2 px-4 rounded-lg bg-[--primary-color]`}
             >
               Rate now
             </button>
           </div>
 
           <div
-            className={`${
-              !isRateNow ? "hidden" : "flex"
-            } w-full justify-center items-center`}
+            className={`${!isRateNow ? "hidden" : "flex"
+              } w-full justify-center items-center`}
           >
             <RateDish
               id={order.dishes[0].dishId}
@@ -156,22 +156,15 @@ const Orders = () => {
     setActiveCard((prev) => (prev === orderId ? null : orderId));
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   return (
     <div className="w-full flex flex-col items-center py-6 min-h-screen">
       <div className="flex lg:pl-14 pl-4 w-full pb-4">
         <PageNav title={"Your Orders"} />
       </div>
 
-      {orders.length > 0 ? (
-        // <div className="w-full lg:w-[80%] grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4">
+      {loading ? (
+        <Loader /> // Show loader while loading
+      ) : orders.length > 0 ? (
         <div className="w-full lg:w-[80%] flex flex-wrap gap-6 justify-start items-start px-4">
           {orders.map((order) => (
             <OrderCard
@@ -188,5 +181,6 @@ const Orders = () => {
     </div>
   );
 };
+
 
 export default Orders;
