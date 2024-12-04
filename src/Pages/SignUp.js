@@ -118,9 +118,8 @@ const SignUp = () => {
                 <button
                     type="submit"
                     disabled={!allFieldsFilled || loading}
-                    className={`btn bg-[--primary-color] hover:bg-[--secondary-color] rounded-full py-4 text-white border-0 mt-6 ${
-                        !allFieldsFilled || loading ? "opacity-50 cursor-not-allowed" : ""
-                    }`}
+                    className={`btn bg-[--primary-color] hover:bg-[--secondary-color] rounded-full py-4 text-white border-0 mt-6 ${!allFieldsFilled || loading ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
                 >
                     {loading ? "Signing Up..." : "Sign Up"}
                 </button>

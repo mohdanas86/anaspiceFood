@@ -1,65 +1,53 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Loader from "../components/Loader";
+import { toast } from "react-hot-toast";
 
 const RateDish = ({ id, orderId, isRated }) => {
+  const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState(""); // Review state
   const [username, setUsername] = useState(""); // Username state
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const url = `${process.env.REACT_APP_BACKEND_URL}/api/dishes/${id}/rate`;
-  //     const orderUrl = `${process.env.REACT_APP_BACKEND_URL}/api/order/israted`;
-
-  //     const response = await axios.post(url, { rating, review, username });
-  //     const orderRatedStatus = await axios.patch(orderUrl, { orderId }, { isRated: isRated === true ? true : true }, { new: true });
-
-  //     console.log("Rating : ", response);
-  //     console.log("isRated : ", orderRatedStatus);
-
-  //     setRating(0);      // Reset rating
-  //     setReview("");      // Reset review
-  //     setUsername("");    // Reset username
-  //   } catch (error) {
-  //     console.error(error);
-  //     alert("Error submitting rating and review");
-  //   }
-  // };
+  const allFieldsFilled = rating && review && username;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
-        const url = `${process.env.REACT_APP_BACKEND_URL}/api/dishes/${id}/rate`;
-        const orderUrl = `${process.env.REACT_APP_BACKEND_URL}/api/order/israted`;
+      const url = `${process.env.REACT_APP_BACKEND_URL}/api/dishes/${id}/rate`;
+      const orderUrl = `${process.env.REACT_APP_BACKEND_URL}/api/order/israted`;
 
-        // Submit rating and review
-        const response = await axios.post(url, { rating, review, username });
+      // Submit rating and review
+      const response = await axios.post(url, { rating, review, username });
 
-        // Update the order's rated status
-        const orderRatedStatus = await axios.patch(orderUrl, {
-            orderId,
-            isRated: true // Explicitly set to true
-        });
+      // Update the order's rated status
+      const orderRatedStatus = await axios.patch(orderUrl, {
+        orderId,
+        isRated: true // Explicitly set to true
+      });
 
-        console.log("Rating submitted:", response.data);
-        console.log("Order rated status updated:", orderRatedStatus.data);
+      console.log("Rating submitted:", response.data);
+      toast.success("Order rated status updated!");
+      console.log("Order rated status updated:", orderRatedStatus.data);
 
-        // Reset form inputs
-        setRating(0);
-        setReview("");
-        setUsername("");
+      // Reset form inputs
+      setRating(0);
+      setReview("");
+      setUsername("");
     } catch (error) {
-        console.error("Error submitting rating or updating order:", error);
-        alert("Error submitting rating and review.");
+      toast.error("Error submitting rating and review. Try Again");
+      console.error("Error submitting rating or updating order:", error);
+      alert("Error submitting rating and review.");
+    } finally {
+      setLoading(false);
     }
-};
+  };
 
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 pt-6 max-w-sm">
+      {loading && <Loader />}
       <h2 className="text-2xl font-semibold text-center text-gray-800">Rate & Review This Dish</h2>
 
       {/* Star Rating */}
@@ -104,8 +92,9 @@ const RateDish = ({ id, orderId, isRated }) => {
       {/* Submit Button */}
       <div className="flex justify-center">
         <button
-          type="submit"
-          className="w-full bg-[--primary-color] hover:bg-[--secondary-color] text-white font-semibold py-3 rounded-md transition-all duration-300 transform hover:scale-105"
+          disabled={!allFieldsFilled || loading}
+          className={`w-full btn bg-[--primary-color] hover:bg-[--secondary-color] rounded-full py-4 text-white border-0 mt-6 ${!allFieldsFilled || loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
         >
           Submit Review
         </button>

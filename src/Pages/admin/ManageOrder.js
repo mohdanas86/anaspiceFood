@@ -1,12 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
+import Loader from "../../components/Loader";
+import { toast } from "react-hot-toast";
 import axios from "axios";
 
 // Component for individual order details
 const OrderCard = ({ order }) => {
+  const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(order.status);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const updateOrderStatus = async (newStatus) => {
+    setLoading(true);
     try {
       const url = `${process.env.REACT_APP_BACKEND_URL}/api/order/status`;
       const response = await axios.patch(
@@ -16,8 +20,12 @@ const OrderCard = ({ order }) => {
       );
       console.log(response);
       console.log(`Order ID: ${order._id} - Status updated to: ${newStatus}`);
+      toast.success(`Order ID: ${order._id} - Status updated to: ${newStatus}`);
     } catch (error) {
+      toast.error(`Failed to update order status`);
       console.error("Failed to update order status:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -32,6 +40,7 @@ const OrderCard = ({ order }) => {
       key={order._id}
       className="border border-gray-200 rounded-xl p-6 shadow-lg bg-gradient-to-b from-white to-gray-50 space-y-4 flex-col flex justify-between"
     >
+      {loading && <Loader />}
       <div className="flex flex-col w-full justify-center items-start">
         <div className="font-bold text-xl text-gray-800 mb-2 tracking-wide">
           Order ID:{" "}
@@ -58,13 +67,12 @@ const OrderCard = ({ order }) => {
                 type="button"
               >
                 <span
-                  className={`${
-                    status === "pending"
-                      ? "text-[--primary-color]"
-                      : status === "completed"
+                  className={`${status === "pending"
+                    ? "text-[--primary-color]"
+                    : status === "completed"
                       ? "text-[--price-color]"
                       : "text-red-500"
-                  }`}
+                    }`}
                 >
                   {status}
                 </span>

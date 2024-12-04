@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { CiShoppingCart } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai"; // React Icon for close button
@@ -40,10 +40,15 @@ const Header = () => {
     <>
       <header className="shadow-md font-sans tracking-wide relative z-50">
         <section className="py-2 bg-[--primary-color] text-white lg:text-right lg:px-10 px-4 lg:block hidden">
-          <p className="text-sm capitalize">
-            Enjoy 40% off plus free shipping on your first order!
-          </p>
+        <CountdownTimer />
+
+
+          {/* Uncomment this if needed */}
+          {/* <p className="text-sm capitalize">
+    Enjoy 40% off plus free shipping on your first order!
+  </p> */}
         </section>
+
 
         <div className="flex flex-wrap items-center justify-between gap-4 px-10 py-4 bg-white min-h-[70px]">
           <Link to="/" className="font-semibold">
@@ -260,18 +265,18 @@ const Header = () => {
               <div className="flex w-full justify-between items-center">
                 {isLoggedIn ? (
                   <button
-                  onClick={() => {
-                    logoutUser();
-                    toggleMenu();
-                  }}
-                  
+                    onClick={() => {
+                      logoutUser();
+                      toggleMenu();
+                    }}
+
                     className="text-lg font-semibold bg-[--primary-color] hover:bg-[--secondary-color] text-white rounded-xl border-0 px-5 py-2"
                   >
                     Logout
                   </button>
                 ) : (
                   <Link
-                  onClick={toggleMenu}
+                    onClick={toggleMenu}
                     to="/signin"
                     className="text-lg font-semibold text-gray-800 hover:text-[--primary-color]"
                   >
@@ -299,5 +304,84 @@ const Header = () => {
     </>
   );
 };
+
+
+// import React, { useState, useEffect } from "react";
+
+export const CountdownTimer = () => {
+  // Set initial duration to 10 hours in milliseconds
+  const duration = 10 * 60 * 60 * 1000;
+
+  // State for the end time and the time left
+  const [endTime, setEndTime] = useState(Date.now() + duration);
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(endTime));
+
+  // Function to calculate time left
+  function calculateTimeLeft(endTime) {
+    const now = Date.now();
+    const difference = endTime - now;
+
+    if (difference <= 0) {
+      // Restart timer by setting a new end time
+      setEndTime(now + duration);
+      return calculateTimeLeft(now + duration);
+    }
+
+    return {
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / (1000 * 60)) % 60),
+      seconds: Math.floor((difference / 1000) % 60),
+    };
+  }
+
+  // Update time left every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft(endTime));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [endTime]);
+
+  return (
+    <div className="flex items-center justify-end w-full py-2">
+    <h2 className="text-xl font-semibold">40% Off Grab The Deal Now, Offer valid Till </h2>
+ 
+      {/* Timer Section */}
+      <div className="flex items-center space-x-4 text-white">
+        <span> </span>
+        {/* Hours */}
+         <span className="text-center flex gap-2">
+           <div className="text-2xl font-extrabold">
+             {timeLeft.hours.toString().padStart(2, "0")}
+          </div>
+           <span className="mt-2 text-sm uppercase tracking-wider">Hours</span>
+        </span>
+
+        <div className="text-2xl font-extrabold">:</div>
+
+        {/* Minutes */}
+        <span className="text-center flex gap-2">
+          <div className="text-2xl font-extrabold">
+            {timeLeft.minutes.toString().padStart(2, "0")}
+          </div>
+          <span className="mt-2 text-sm uppercase tracking-wider">Minutes</span>
+        </span>
+
+        <div className="text-2xl font-extrabold">:</div>
+
+        {/* Seconds */}
+        <span className="text-center flex gap-2">
+          <div className="text-2xl font-extrabold">
+            {timeLeft.seconds.toString().padStart(2, "0")}
+          </div>
+          <span className="mt-2 text-sm uppercase tracking-wider">Seconds</span>
+        </span>
+      </div>
+    </div>
+  );
+};
+
+
 
 export default Header;
