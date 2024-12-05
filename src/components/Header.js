@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { CiShoppingCart } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai"; // React Icon for close button
@@ -312,27 +312,27 @@ export const CountdownTimer = () => {
   // Set initial duration to 10 hours in milliseconds
   const duration = 10 * 60 * 60 * 1000;
 
+    // Function to calculate time left
+    const calculateTimeLeft = useCallback((endTime) => {
+      const now = Date.now();
+      const difference = endTime - now;
+  
+      if (difference <= 0) {
+        // Restart timer by setting a new end time
+        setEndTime(now + duration);
+        return calculateTimeLeft(now + duration);
+      }
+  
+      return {
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / (1000 * 60)) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    }, [duration]);
+
   // State for the end time and the time left
   const [endTime, setEndTime] = useState(Date.now() + duration);
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(endTime));
-
-  // Function to calculate time left
-  function calculateTimeLeft(endTime) {
-    const now = Date.now();
-    const difference = endTime - now;
-
-    if (difference <= 0) {
-      // Restart timer by setting a new end time
-      setEndTime(now + duration);
-      return calculateTimeLeft(now + duration);
-    }
-
-    return {
-      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((difference / (1000 * 60)) % 60),
-      seconds: Math.floor((difference / 1000) % 60),
-    };
-  }
 
   // Update time left every second
   useEffect(() => {
@@ -341,21 +341,20 @@ export const CountdownTimer = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [endTime]);
+  }, [endTime, calculateTimeLeft]);
 
   return (
     <div className="flex items-center justify-end w-full py-2">
-    <h2 className="text-xl font-semibold">40% Off Grab The Deal Now, Offer valid Till </h2>
- 
+      <h2 className="text-xl font-semibold">40% Off Grab The Deal Now, Offer valid Till </h2>
       {/* Timer Section */}
       <div className="flex items-center space-x-4 text-white">
         <span> </span>
         {/* Hours */}
-         <span className="text-center flex gap-2">
-           <div className="text-2xl font-extrabold">
-             {timeLeft.hours.toString().padStart(2, "0")}
+        <span className="text-center flex gap-2">
+          <div className="text-2xl font-extrabold">
+            {timeLeft.hours.toString().padStart(2, "0")}
           </div>
-           <span className="mt-2 text-sm uppercase tracking-wider">Hours</span>
+          <span className="mt-2 text-sm uppercase tracking-wider">Hours</span>
         </span>
 
         <div className="text-2xl font-extrabold">:</div>
@@ -381,6 +380,7 @@ export const CountdownTimer = () => {
     </div>
   );
 };
+
 
 
 
