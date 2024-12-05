@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 // Component to render individual order details
 const OrderCard = ({ order, isRateNow, toggleRateNow }) => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const handleClick = (e) => {
     navigate(`/dishes/${e}`);
@@ -40,10 +40,10 @@ const OrderCard = ({ order, isRateNow, toggleRateNow }) => {
             <span className="text-gray-600">Status </span>
             <span
               className={`${order.status === "pending"
-                  ? "text-[--primary-color]"
-                  : order.status === "completed"
-                    ? "text-[--price-color]"
-                    : "text-red-500"
+                ? "text-[--primary-color]"
+                : order.status === "completed"
+                  ? "text-[--price-color]"
+                  : "text-red-500"
                 } font-medium ml-1`}
             >
               {order.status}
@@ -130,7 +130,7 @@ const OrderCard = ({ order, isRateNow, toggleRateNow }) => {
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
   const [activeCard, setActiveCard] = useState(null);
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -143,7 +143,7 @@ const Orders = () => {
       console.log(response.data.data);
       setLoading(false);
     } catch (err) {
-      setError("Error fetching orders. Please try again.");
+      toast.error("Error fetching orders. Please try again.");
       setLoading(false);
     }
   }, [user._id]);
