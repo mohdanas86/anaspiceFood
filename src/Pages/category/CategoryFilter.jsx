@@ -72,31 +72,31 @@ const CategoryFilter = ({ onFilter, onFilterTag }) => {
       {/* Mobile view */}
       <div className="lg:hidden z-50">
         {/* header icons and button */}
-      <div className="w-full">
-      <div className="w-full overflow-scroll flex justify-start items-center gap-2 p-0">
-       <button
-          onClick={toggleMenu}
-          className="text-lg font-semibold border shadow-sm rounded-lg py-2 px-4 flex justify-between items-center gap-2"
-        >
-          <div>Filter</div>
-          <img src="./filterICON.png" alt="filter" width={20} height={20} />
-        </button>
-
-        {categories && categories.slice(1,6).map((category, index) => (
-  <button
-    onClick={() => onFilter(category)}
-    key={index}
-    className="text-lg font-semibold border shadow-sm rounded-lg py-2 px-4 flex justify-between items-center gap-2"
-  >
-    {category}  {/* This will display the category name */}
-    {/* <img src="./filterICON.png" alt="filter" width={20} height={20} /> */}
-  </button>
-))}
+        <div className="w-full">
+          <div className="w-full overflow-scroll flex justify-start items-center gap-2 p-0">
+            <button
+              onClick={toggleMenu}
+              className="border shadow-sm rounded-lg py-2 flex justify-start items-center gap-2 pl-2 pr-8"
+            >
+              Filter <img src="./filterICON.png" alt="filter" className="w-[20px] h-[20px]" />
+            </button>
 
 
+            {categories && categories.slice(1, 6).map((category, index) => (
+              <button
+                onClick={() => onFilter(category)}
+                key={index}
+                className=" border shadow-sm rounded-lg py-2 px-4 flex justify-between items-center gap-2"
+              >
+                {category}  {/* This will display the category name */}
+                {/* <img src="./filterICON.png" alt="filter" width={20} height={20} /> */}
+              </button>
+            ))}
 
-       </div>
-      </div>
+
+
+          </div>
+        </div>
 
 
         {!menu && (
