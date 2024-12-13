@@ -5,7 +5,7 @@ import axios from "axios";
 
 // Component for individual order details
 const OrderCard = ({ order }) => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(order.status);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
