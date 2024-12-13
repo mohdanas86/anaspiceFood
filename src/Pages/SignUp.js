@@ -58,7 +58,7 @@ const SignUp = () => {
     };
 
     return (
-        <div className="container min-h-screen mx-auto p-6 justify-center items-center flex">
+        <div className="container min-h-screen mx-auto p-6 justify-center items-center flex relative">
             {loading && <Loader />}
 
             <form className="lg:w-[30%] w-full mx-auto grid gap-4 py-4" onSubmit={handleSubmit}>

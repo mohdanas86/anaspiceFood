@@ -134,13 +134,36 @@ dishRouter.get("/category", async (req, res) => {
         if (!dishes || dishes.length === 0) {
             return res.status(404).json({ message: 'No dishes found' });
         }
-
+        // console.log(dishes)
         return res.json(dishes);  // Return the dishes if found
     } catch (error) {
         console.error('Error retrieving dishes:', error);
         return res.status(500).json({ message: 'Server error' });
     }
 });
+
+dishRouter.get("/tag", async (req, res) => {
+    const tag = req.query.tag;  // Access the tag query parameter
+    // console.log(tag);
+
+    try {
+        // If tag is provided, filter dishes by tag
+        const query = tag && tag !== "All" ? { tags: { $in: [tag] } } : {};
+
+        const dishes = await dishModel.find(query);  // Fetch the dishes using the query
+
+        if (!dishes || dishes.length === 0) {
+            return res.status(404).json({ message: 'No dishes found' });
+        }
+
+        // console.log(dishes);
+        return res.json(dishes);  // Return the dishes if found
+    } catch (error) {
+        console.error('Error retrieving dishes:', error);
+        return res.status(500).json({ message: 'Server error' });
+    }
+});
+
 
 
 export default dishRouter;

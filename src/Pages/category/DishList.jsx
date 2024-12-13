@@ -42,8 +42,35 @@ const DishList = () => {
     }
   };
 
+  // Function to fetch dishes based on the selected tag
+  const onFilterTag = async (tag) => {
+    console.log(tag)
+    setLoading(true);
+    try {
+      const url = tag
+        ? `${process.env.REACT_APP_BACKEND_URL}/api/tag?tag=${tag}`
+        : `${process.env.REACT_APP_BACKEND_URL}/api/tag`; // If no tag, fetch all
+      const response = await axios.get(url);
+
+      // Check if dishes are returned
+      if (response.data.length === 0) {
+        setError("No dishes found for this tag.");
+      } else {
+        setDishes(response.data);
+        localStorage.setItem("tag", JSON.stringify(response.data));
+      }
+      setError(null); // Reset error state
+    } catch (err) {
+      console.error("Error fetching dishes:", err);
+      setError("Failed to fetch dishes.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchDishes(""); // Initially, fetch all dishes
+    onFilterTag(""); // Initially, fetch all dishes
   }, []);
 
   return (
@@ -51,7 +78,7 @@ const DishList = () => {
       <div className="flex flex-col lg:flex-row lg:space-x-6 w-full">
         {/* Category Filter Component */}
         <div className="flex lg:w-[20%] pt-8 lg:pl-10 px-4">
-          <CategoryFilter onFilter={fetchDishes} />
+          <CategoryFilter onFilter={fetchDishes} onFilterTag={onFilterTag} />
         </div>
 
         {/* Display Dishes or Loading/Error */}

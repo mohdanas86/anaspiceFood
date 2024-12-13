@@ -40,7 +40,6 @@ const OrderCard = ({ order }) => {
       key={order._id}
       className="border border-gray-200 rounded-xl p-6 shadow-lg bg-gradient-to-b from-white to-gray-50 space-y-4 flex-col flex justify-between"
     >
-      {loading && <Loader />}
       <div className="flex flex-col w-full justify-center items-start">
         <div className="font-bold text-xl text-gray-800 mb-2 tracking-wide">
           Order ID:{" "}
@@ -193,16 +192,9 @@ const ManageOrder = () => {
     getOrders();
   }, [getOrders]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   return (
-    <div className="w-full flex flex-col items-center py-6 min-h-[59.5vh]">
+    <div className="w-full flex flex-col items-center py-6 min-h-screen relative">
+      {loading && <Loader />}
       <div className="flex lg:pl-14 pl-4 w-full pb-4">
         <h1 className="text-2xl font-bold">Manage Orders</h1>
       </div>

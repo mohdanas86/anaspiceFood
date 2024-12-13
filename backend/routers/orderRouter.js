@@ -4,19 +4,50 @@ import dishModel from "../models/dishModel.js";
 
 const orderRouter = express.Router();
 
-// ==== POST NEW ORDER ONLY FOR AMIN ====
+// ==== POST NEW ORDER ONLY FOR ADMIN ====
 orderRouter.post("/order", async (req, res) => {
     try {
         const data = req.body;
-        const order = await orderModel.create(data);
-        return res.status(200).json({
-            message: "order created successful",
-            data: order
-        })
+
+        if (!data.shippingInfo.address) {
+            return res.status(400).json({ message: "Address is required. Please try again." });
+        }
+
+        switch (true) {
+            case !data.shippingInfo.address:
+                return res.status(400).json({ message: "Address is required. Please try again." });
+                break;
+            case !data.shippingInfo.city:
+                return res.status(400).json({ message: "City is required. Please try again." });
+                break;
+            case !data.shippingInfo.state:
+                return res.status(400).json({ message: "State is required. Please try again." });
+                break;
+            case !data.shippingInfo.zipCode:
+                return res.status(400).json({ message: "Zip code is required. Please try again." });
+                break;
+            default:
+                const order = await orderModel.create(data);
+                return res.status(201).json({
+                    message: "Order created successfully",
+                    data: order
+                });
+        }
+        // const order = await orderModel.create(data);
+
+        // return res.status(201).json({
+        //     message: "Order created successfully",
+        //     data: order
+        // });
     } catch (err) {
-        console.log(err)
+        console.error(err);
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
     }
-})
+});
+
 
 // ==== GET ORDER BY USER ID ====
 orderRouter.get("/order/:userId", async (req, res) => {
