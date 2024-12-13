@@ -119,15 +119,15 @@ const Checkout = () => {
       });
 
       const data = await response.json();
-
-      if (response.ok) {
-        toast.success("order to placed.");
+      console.log(data)
+      if (data.message == 'Address is required. Please try again.') {
+        toast.error(data.message);
+      } else {
+        toast.success(data.message);
         // Order placed successfully, clear the cart items
         setCartItems([]); // Clear cart items in the context
         localStorage.setItem("cartItems", JSON.stringify([])); // Clear cart in local storage
         setSuccessMessage("Order placed successfully!");
-      } else {
-        throw new Error(data.message || "Failed to place the order. Please try again.");
       }
     } catch (err) {
       toast.error("Failed to place the order. Please try again.");
@@ -143,7 +143,7 @@ const Checkout = () => {
 
   return (
     <div className="container min-h-screen mx-auto">
-{loading && <Loader />}
+      {loading && <Loader />}
       {/* <h2 className="text-2xl font-bold mb-4">Checkout</h2> */}
 
 
@@ -339,52 +339,52 @@ const Checkout = () => {
               <div className="relative w-full overflow-x-auto bg-gray-50">
                 <div className="overflow-x-auto p-4 lg:w-[80%] w-full mx-auto mt-8">
 
-                <div className="overflow-x-auto">
-                  <table className="min-w-full bg-white text-gray-800">
-                    <thead>
-                      <tr className="bg-gradient-to-r from-gray-100 to-gray-200 text-left">
-                        <th className="py-3 px-5 text-sm font-semibold text-gray-700">Image</th>
-                        <th className="py-3 px-5 text-sm font-semibold text-gray-700">Dish</th>
-                        <th className="py-3 px-5 text-sm font-semibold text-gray-700">Price</th>
-                        <th className="py-3 px-5 text-sm font-semibold text-gray-700">Quantity</th>
-                        <th className="py-3 px-5 text-sm font-semibold text-gray-700">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {cartItems.map((item) => (
-                        <tr key={item.id} className="hover:bg-gray-100 border-b">
-                          <td className="py-4 px-5">
-                            <div className="w-16 h-16 border border-gray-200 rounded-lg overflow-hidden">
-                              <img
-                                src={item.image}
-                                alt={item.name}
-                                className="object-cover w-full h-full transition-transform duration-200 hover:scale-105"
-                              />
-                            </div>
-                          </td>
-                          <td className="py-4 px-5 text-sm font-medium">{item.name}</td>
-                          <td className="py-4 px-5 text-gray-900">₹{item.price}</td>
-                          <td className="py-4 px-5">
-                            <input
-                              type="number"
-                              value={item.quantity}
-                              onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
-                              min="1"
-                              className="border border-gray-300 rounded-lg w-20 text-center font-medium py-1.5 shadow-sm focus:border-blue-400 focus:ring focus:ring-[--outline-color] transition-all duration-200 ease-in-out"
-                            />
-                          </td>
-                          <td className="py-4 px-5">
-                            <button
-                              onClick={() => removeFromCart(item.id)}
-                              className="bg-red-500 text-white font-semibold px-4 py-2 rounded-md shadow-sm hover:bg-red-600 hover:shadow-lg transition-transform transform duration-200 hover:scale-105 active:scale-95"
-                            >
-                              <AiOutlineDelete size={20} />
-                            </button>
-                          </td>
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full bg-white text-gray-800">
+                      <thead>
+                        <tr className="bg-gradient-to-r from-gray-100 to-gray-200 text-left">
+                          <th className="py-3 px-5 text-sm font-semibold text-gray-700">Image</th>
+                          <th className="py-3 px-5 text-sm font-semibold text-gray-700">Dish</th>
+                          <th className="py-3 px-5 text-sm font-semibold text-gray-700">Price</th>
+                          <th className="py-3 px-5 text-sm font-semibold text-gray-700">Quantity</th>
+                          <th className="py-3 px-5 text-sm font-semibold text-gray-700">Actions</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {cartItems.map((item) => (
+                          <tr key={item.id} className="hover:bg-gray-100 border-b">
+                            <td className="py-4 px-5">
+                              <div className="w-16 h-16 border border-gray-200 rounded-lg overflow-hidden">
+                                <img
+                                  src={item.image}
+                                  alt={item.name}
+                                  className="object-cover w-full h-full transition-transform duration-200 hover:scale-105"
+                                />
+                              </div>
+                            </td>
+                            <td className="py-4 px-5 text-sm font-medium">{item.name}</td>
+                            <td className="py-4 px-5 text-gray-900">₹{item.price}</td>
+                            <td className="py-4 px-5">
+                              <input
+                                type="number"
+                                value={item.quantity}
+                                onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
+                                min="1"
+                                className="border border-gray-300 rounded-lg w-20 text-center font-medium py-1.5 shadow-sm focus:border-blue-400 focus:ring focus:ring-[--outline-color] transition-all duration-200 ease-in-out"
+                              />
+                            </td>
+                            <td className="py-4 px-5">
+                              <button
+                                onClick={() => removeFromCart(item.id)}
+                                className="bg-red-500 text-white font-semibold px-4 py-2 rounded-md shadow-sm hover:bg-red-600 hover:shadow-lg transition-transform transform duration-200 hover:scale-105 active:scale-95"
+                              >
+                                <AiOutlineDelete size={20} />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
 
                   {/* Order Summary and Place Order Button */}
@@ -423,7 +423,7 @@ const Checkout = () => {
                   {successMessage && <p className="text-green-600 mt-2">{successMessage}</p>}
                 </div>
               </div>
-              
+
             </div>
           </div>
 

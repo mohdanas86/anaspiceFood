@@ -157,13 +157,13 @@ const Orders = () => {
   };
 
   return (
-    <div className="w-full flex flex-col items-center py-6 min-h-screen">
+    <div className="w-full flex flex-col items-center py-6 min-h-screen relative">
       <div className="flex lg:pl-14 pl-4 w-full pb-4">
         <PageNav title={"Your Orders"} />
       </div>
 
       {loading ? (
-        <Loader /> // Show loader while loading
+        <Loader loading={loading} /> // Show loader while loading
       ) : orders.length > 0 ? (
         <div className="w-full lg:w-[80%] flex flex-wrap gap-6 justify-start items-start px-4">
           {orders.map((order) => (

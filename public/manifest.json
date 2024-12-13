@@ -3,17 +3,17 @@
   "name": "AnaSpice - Discover Flavorful Food",
   "icons": [
     {
-      "src": "./anaspice3.png",
+      "src": "https://anaspice.netlify.app/logo-removebg-preview.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "./anaspice3.png",
+      "src": "https://anaspice.netlify.app/logo-removebg-preview.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "./anaspice3.png",
+      "src": "https://anaspice.netlify.app/logo-removebg-preview.png",
       "type": "image/png",
       "sizes": "512x512"
     }

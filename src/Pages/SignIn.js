@@ -62,7 +62,7 @@ const SignIn = () => {
     <>
       {loading ? (<Loader />) : ("")}
 
-      <div className="container min-h-screen mx-auto p-6 justify-center items-center flex">
+      <div className="container min-h-screen relative mx-auto p-6 justify-center items-center flex">
         <form className="lg:w-[30%] w-full mx-auto grid gap-4 py-4" onSubmit={handleSubmit}>
           <div className="grid text-center">
             <h2 className="text-2xl font-bold text-slate-800">Log In</h2>
