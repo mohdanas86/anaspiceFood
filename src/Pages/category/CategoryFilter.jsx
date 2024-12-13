@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { AiOutlineClose } from "react-icons/ai";
-import { Link } from "react-router-dom";
 
 const CategoryFilter = ({ onFilter, onFilterTag }) => {
   const [menu, setMenu] = useState(true);
