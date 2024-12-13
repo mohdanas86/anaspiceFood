@@ -120,7 +120,7 @@ const Checkout = () => {
 
       const data = await response.json();
       console.log(data)
-      if (data.message == 'Address is required. Please try again.') {
+      if (data.message === 'Address is required. Please try again.') {
         toast.error(data.message);
       } else {
         toast.success(data.message);
