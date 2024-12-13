@@ -5,12 +5,10 @@ import axios from "axios";
 
 // Component for individual order details
 const OrderCard = ({ order }) => {
-  // const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(order.status);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const updateOrderStatus = async (newStatus) => {
-    setLoading(true);
     try {
       const url = `${process.env.REACT_APP_BACKEND_URL}/api/order/status`;
       const response = await axios.patch(
@@ -24,8 +22,6 @@ const OrderCard = ({ order }) => {
     } catch (error) {
       toast.error(`Failed to update order status`);
       console.error("Failed to update order status:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -174,16 +170,17 @@ const OrderCard = ({ order }) => {
 const ManageOrder = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const getOrders = useCallback(async () => {
+    setLoading(true);
     try {
       const url = `${process.env.REACT_APP_BACKEND_URL}/api/all/orders`;
       const response = await axios.get(url);
       setOrders(response.data.data); // Adjust based on API response structure
       setLoading(false);
     } catch (err) {
-      setError("Error fetching orders. Please try again.");
+      console.log(err)
+    } finally {
       setLoading(false);
     }
   }, []);
