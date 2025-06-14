@@ -1,49 +1,106 @@
-# Anaspice - Food Ordering Web Application
+# Anaspice — Food Ordering Web Application
 
-Welcome to **Anaspice**, a professional, full-featured food ordering web application created by **Anas Alam**. With Anaspice, users can securely log in, explore menu options, place orders, and make seamless online payments. Designed with a responsive interface, Anaspice provides an intuitive experience on all devices.
+**Anaspice** is a full-stack food ordering platform developed by **Anas Alam**, designed for a smooth and secure user experience. The app allows users to browse menus and place orders with modern UI and backend logic powered by Node.js, MongoDB.
+
+**Live Demo**: [https://anaspice.netlify.app](https://anaspice.netlify.app)
+
+---
 
 ## Features
 
-- **User Authentication**: Secure login and registration using JWT (JSON Web Token) authentication.
-- **Order Placement**: Browse through the menu and easily place orders in just a few clicks.
-- **Payment Integration**: Smooth and secure online payment gateway for an efficient checkout process.
-- **Data Security**: All user information and order data are securely stored to ensure privacy and data protection.
-- **Responsive Design**: Optimized for mobile, tablet, and desktop devices for a consistent user experience.
+### Frontend
+- JWT-based Authentication (Login/Signup)
+- Menu Browsing & Cart Management
+- Order Placement with Confirmation Flow
+- Responsive UI Design
+
+### Backend
+- RESTful API using Express.js
+- MongoDB with Mongoose ODM
+- JWT Auth & Route Protection
+- CORS-secured API calls
+
+---
+
+## Tech Stack
+
+### Frontend
+
+| Layer     | Tools / Libraries                         |
+|-----------|--------------------------------------------|
+| Framework | React.js, Create React App                 |
+| Styling   | Tailwind CSS, DaisyUI                      |
+| Routing   | React Router DOM                           |
+| State/API | Axios, Local State                         |
+| UI Tools  | React Icons, Hot Toast                     |
+| Hosting   | Netlify (primary), GitHub Pages (optional) |
+
+### Backend
+
+| Layer       | Tools / Libraries                        |
+|-------------|-------------------------------------------|
+| Server      | Express.js                                |
+| Database    | MongoDB + Mongoose                        |
+| Auth        | JSON Web Tokens (JWT)                     |
+| Environment | dotenv                                    |
+| Hosting     | Render   |
 
 ---
 
 ## Getting Started
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ### Prerequisites
 
-Ensure **Node.js** and **npm** are installed on your system.
+- Node.js and npm installed
+- MongoDB Atlas account (or local instance)
 
-### Available Scripts
+---
 
-In the project directory, you can run:
+## Installation
 
-#### `npm start`
+### Frontend
 
-Runs Anaspice in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.\
-The app will reload if code changes are detected.
+```bash
+git clone https://github.com/yourusername/anaspice.git
+cd anaspice
+npm install
+npm start
+```
 
-#### `npm run build`
+### Backend
 
-Builds Anaspice for production into the `build` directory, optimizing the bundle for the best performance.\
-Learn more about [deployment](https://facebook.github.io/create-react-app/docs/deployment).
+```bash
+cd backend
+npm install
+```
+
+#### Development Mode
+
+```bash
+npm start
+```
 
 ---
 
 ## Preview
+![Screenshot 2025-06-11 204103](https://github.com/user-attachments/assets/2c5f664d-9eca-443e-bccc-54e7f423d3ac)
+![Screenshot 2025-06-11 204208](https://github.com/user-attachments/assets/7d7012b3-7133-417e-8f52-2ba477b26c37)
+![Screenshot 2025-06-11 204149](https://github.com/user-attachments/assets/df0efb31-c009-470a-98f4-6c45bce1e388)
+![Screenshot 2025-06-11 204125](https://github.com/user-attachments/assets/3aeb4ef4-3010-4041-885a-3508e2190397)
+![Screenshot 2025-06-11 204117](https://github.com/user-attachments/assets/bc1af32f-fbcd-4619-9486-26d9ba989667)
 
-To see Anaspice in action, visit the live preview link here: [Anaspice Live Preview](https://anaspice.netlify.app/).
+
+---
+
+## Deployment
+
+- Frontend: [https://anaspice.netlify.app](https://anaspice.netlify.app)
+- Backend: Handled On Render
+
+---
 
 ## Contact
 
-For questions or feedback, please reach out to the creator:
-
-**Anas Alam**\
+Created by **Anas Alam**  
 Email: [coadanas@gmail.com](mailto:coadanas@gmail.com)
+
